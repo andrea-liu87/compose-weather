@@ -1,4 +1,4 @@
-package com.andreasgift.kmpweatherapp.android.ui.home
+package home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.andreasgift.kmpweatherapp.android.ui.component.HourForecast
-import com.andreasgift.kmpweatherapp.android.ui.theme.SolidPurple
-import com.andreasgift.kmpweatherapp.android.ui.theme.UnselectedTabTitle
-import com.andreasgift.kmpweatherapp.android.ui.theme.secondary
+import component.HourForecast
+import theme.SolidPurple
+import theme.UnselectedTabTitle
+import theme.secondary
 
 @Composable
 fun BottomSheetContent() {
@@ -43,7 +43,8 @@ fun BottomSheetContent() {
             titles.forEachIndexed { index, title ->
                 Tab(
                     text = { Text(title, color =
-                    if (tabIndex == index) secondary else UnselectedTabTitle) },
+                    if (tabIndex == index) secondary else UnselectedTabTitle
+                    ) },
                     selected = tabIndex == index,
                     onClick = { tabIndex = index },
                     selectedContentColor = secondary,

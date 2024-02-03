@@ -14,10 +14,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.andreasgift.kmpweatherapp.WeatherAPI
+import api.WeatherAPI
 import com.andreasgift.kmpweatherapp.android.R
-import com.andreasgift.kmpweatherapp.android.ui.component.TabBar
-import com.andreasgift.kmpweatherapp.android.ui.theme.WeatherTheme
+import component.TabBar
+import theme.WeatherTheme
+import home.BottomSheetContent
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -35,7 +36,7 @@ fun Home(
         else 16.dp
 
     Scaffold(
-        bottomBar = { TabBar()}
+        bottomBar = { TabBar() }
     ) {
         BottomSheetScaffold(
             sheetContent = { BottomSheetContent() },

@@ -5,4 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
+    kotlin("jvm").version("1.9.0").apply(false)
+    kotlin("plugin.serialization").version("1.9.0").apply(false)
+    id("com.google.dagger.hilt.android") version "2.48" apply false
 }

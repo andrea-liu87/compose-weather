@@ -1,4 +1,4 @@
-package com.andreasgift.kmpweatherapp.android.ui.theme
+package theme
 
 import android.app.Activity
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import theme.primary
+import theme.secondary
 
 @Composable
 fun WeatherTheme(

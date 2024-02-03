@@ -1,19 +1,28 @@
-package com.andreasgift.kmpweatherapp
+package api
 
 import com.andreasgift.kmpweatherapp.BuildKonfig.apiKey
+import models.WeatherAPIResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import utils.get
 
 
-class WeatherAPI {
+class WeatherAPI(private val client: HttpClient)  {
     private val baseUrl = "https://api.openweathermap.org/data/2.5/weather?"
     private val apiUrl =
         "https://api.openweathermap.org/data/2.5/weather?lat=45.5019&lon=-73.5674&appid=${apiKey}"
+
+    suspend fun getWeatherApiData(): Result<WeatherAPIResponse> =
+        client.get { url { path("data/2.5/weather?lat=45.5019&lon=-73.5674") } }
+
+    suspend fun getWeatherApiDataFrLonLat(latitude: Double, longitude:Double): Result<WeatherAPIResponse> =
+        client.get { url {path("data/2.5/weather?lat=$latitude&lon=$longitude")} }
 
     @OptIn(DelicateCoroutinesApi::class)
     fun getWeatherAPIData(

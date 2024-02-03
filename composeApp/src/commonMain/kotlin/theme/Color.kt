@@ -1,4 +1,4 @@
-package com.andreasgift.kmpweatherapp.android.ui.theme
+package theme
 
 import androidx.compose.ui.graphics.Color
 

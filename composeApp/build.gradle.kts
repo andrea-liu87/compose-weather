@@ -1,10 +1,26 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.15.1")
+        classpath("org.jetbrains.compose:compose-gradle-plugin:1.6.0-beta01")
+    }
+}
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    id("com.codingfeline.buildkonfig") version "+"
+    kotlin("plugin.serialization")
+    id("kotlin-parcelize")
 }
 
 kotlin {
@@ -30,6 +46,10 @@ kotlin {
     }
     
     sourceSets {
+        val ktorVersion = "2.3.2"
+        val coroutineVersion = "1.6.4"
+        val composeVersion = "1.5.4"
+
         val desktopMain by getting
         
         androidMain.dependencies {
@@ -43,6 +63,15 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+            implementation("io.ktor:ktor-client-core:$ktorVersion")
+            implementation(libs.essenty.parcelable)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -83,6 +112,9 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
+dependencies {
+    implementation("androidx.compose.ui:ui-tooling-preview-android:1.6.0")
+}
 
 compose.desktop {
     application {
@@ -93,5 +125,14 @@ compose.desktop {
             packageName = "com.andreasgift.composeweather"
             packageVersion = "1.0.0"
         }
+    }
+}
+
+buildkonfig {
+    packageName = "com.andreasgift.kmpweatherapp"
+
+    defaultConfigs {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "apiKey", ((project.findProperty("API_KEY") ?: "null") as String) )
     }
 }

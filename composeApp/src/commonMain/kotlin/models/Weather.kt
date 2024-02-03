@@ -1,14 +1,19 @@
-package com.andreasgift.kmpweatherapp
+package models
 
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
+import com.arkivanov.essenty.parcelable.WriteWith
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
 @Serializable
+@Parcelize
 data class WeatherAPIResponse (
     @SerialName("coord"      ) var coord      : Coord?            = Coord(),
     @SerialName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
     @SerialName("base"       ) var base       : String?            = null,
-    @SerialName("main"       ) var main       : Main              = Main(),
+    @SerialName("main"       ) var main       : Main = Main(),
     @SerialName("visibility" ) var visibility : Int?               = null,
     @SerialName("wind"       ) var wind       : Wind?              = Wind(),
     @SerialName("snow"       ) var snow       : Snow?              = Snow(),
@@ -23,12 +28,14 @@ data class WeatherAPIResponse (
 )
 
 @Serializable
+@Parcelize
 data class Coord (
     @SerialName("lon" ) var lon : Double? = null,
     @SerialName("lat" ) var lat : Double? = null
 )
 
 @Serializable
+@Parcelize
 data class Weather (
     @SerialName("id"          ) var id          : Int?    = null,
     @SerialName("main"        ) var main        : String? = null,
@@ -37,6 +44,7 @@ data class Weather (
 )
 
 @Serializable
+@Parcelize
 data class Main (
     @SerialName("temp"       ) var temp      : Double? = null,
     @SerialName("feels_like" ) var feelsLike : Double? = null,
@@ -49,6 +57,7 @@ data class Main (
 )
 
 @Serializable
+@Parcelize
 data class Wind (
     @SerialName("speed" ) var speed : Double? = null,
     @SerialName("deg"   ) var deg   : Int?    = null,
@@ -56,21 +65,25 @@ data class Wind (
 )
 
 @Serializable
+@Parcelize
 data class Rain (
     @SerialName("1h" ) var h : Double? = null
 )
 
 @Serializable
+@Parcelize
 data class Snow (
     @SerialName("1h" ) var h : Double? = null
 )
 
 @Serializable
+@Parcelize
 data class Clouds (
     @SerialName("all" ) var all : Int? = null
 )
 
 @Serializable
+@Parcelize
 data class Sys (
     @SerialName("type"    ) var type    : Int?    = null,
     @SerialName("id"      ) var id      : Int?    = null,
