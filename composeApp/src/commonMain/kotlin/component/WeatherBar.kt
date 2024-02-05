@@ -10,17 +10,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
 import theme.SolidBlue
 
 @Composable
@@ -36,7 +37,7 @@ fun WeatherBar(){
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(modifier = Modifier.padding(top = 8.dp), text = "12 AM", style = TextStyle(color = Color.White, fontSize = 20.sp))
-        Image(painter = painterResource(id = android.R.drawable.arrow_up_float), contentDescription = "")
+        Image( Icons.Filled.ArrowBack, contentDescription = "")
         Text(modifier = Modifier.padding(bottom = 8.dp), text ="19°",style = TextStyle(color = androidx.compose.ui.graphics.Color.White, fontSize = 24.sp))
     }
 }
@@ -50,10 +51,4 @@ fun HourForecast(){
             WeatherBar()
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewWeatherBarView(){
-    HourForecast()
 }

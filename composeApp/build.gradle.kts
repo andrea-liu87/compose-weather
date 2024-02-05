@@ -11,6 +11,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.15.1")
         classpath("org.jetbrains.compose:compose-gradle-plugin:1.6.0-beta01")
+        classpath(libs.kotlin.gradle.plugin)
     }
 }
 
@@ -111,9 +112,6 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
-}
-dependencies {
-    implementation("androidx.compose.ui:ui-tooling-preview-android:1.6.0")
 }
 
 compose.desktop {

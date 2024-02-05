@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import component.HourForecast
 import theme.SolidPurple
@@ -76,20 +75,4 @@ fun HandleDrag(){
             .padding(top = 12.dp, bottom = 16.dp)
             .background(color = Color.Black, shape = RoundedCornerShape( 2.dp))
     ) {}
-}
-
-@Preview
-@Composable
-fun handleShape(){
-    HandleDrag()
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
-@Composable
-fun BottomSheetPreview(){
-    val sheetState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
-    )
-    BottomSheetContent()
 }

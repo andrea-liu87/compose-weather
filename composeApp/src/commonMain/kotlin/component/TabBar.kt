@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.andreasgift.kmpweatherapp.android.R
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import theme.SolidPurple2
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun TabBar() {
     val iconSize = 44
@@ -39,14 +39,14 @@ fun TabBar() {
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
             contentScale = ContentScale.Fit,
-            painter = painterResource(id = R.drawable.location),
+            painter = painterResource("location.png"),
             contentDescription = "location"
         )
         Image(
             modifier = Modifier
                 .clickable { }
                 .height(100.dp),
-            painter = painterResource(id = R.drawable.mainadd_btn),
+            painter = painterResource("mainadd_btn.xml"),
             contentDescription = "add button"
         )
         Image(
@@ -55,7 +55,7 @@ fun TabBar() {
                 .height(iconSize.dp)
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
-            painter = painterResource(id = R.drawable.seemore),
+            painter = painterResource("seemore.png"),
             contentScale = ContentScale.Fit,
             contentDescription = "see more"
         )
@@ -96,10 +96,4 @@ private fun drawBackgroundPath(size: Size): Path {
 
         close()
     }
-}
-
-@Preview
-@Composable
-fun BottomBarPreview(){
-    TabBar()
 }

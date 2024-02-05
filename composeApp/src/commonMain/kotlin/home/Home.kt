@@ -1,4 +1,4 @@
-package com.andreasgift.kmpweatherapp.android.ui.home
+package home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -6,21 +6,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import api.WeatherAPI
-import com.andreasgift.kmpweatherapp.android.R
 import component.TabBar
-import theme.WeatherTheme
-import home.BottomSheetContent
+import io.ktor.utils.io.core.*
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun Home(
     onNavigateToRoute: (String) -> Unit,
@@ -40,7 +39,7 @@ fun Home(
     ) {
         BottomSheetScaffold(
             sheetContent = { BottomSheetContent() },
-            sheetPeekHeight = LocalConfiguration.current.screenHeightDp.dp / 2,
+            sheetPeekHeight = LocalWindowInfo.current.containerSize.height.dp/3,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
@@ -50,13 +49,14 @@ fun Home(
     }
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun WeatherView(api: WeatherAPI) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painterResource(id = R.drawable.background),
+                painterResource("background.png"),
                 contentScale = ContentScale.FillBounds
             )
     ) {
@@ -103,7 +103,7 @@ fun WeatherView(api: WeatherAPI) {
                     .fillMaxSize()
                     .padding(vertical = 12.dp)
                     .weight(1.5f),
-                painter = painterResource(id = R.drawable.house2),
+                painter = painterResource("house2.png"),
                 contentDescription = "house",
                 contentScale = ContentScale.Fit
             )
@@ -112,23 +112,7 @@ fun WeatherView(api: WeatherAPI) {
     }
 }
 
-fun convertToC (f:Double) : String {
+fun convertToC(f: Double): String {
     val tempInC = f - 273
-    return String.format("%.0f", tempInC)
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun WeatherViewPreview(){
-    WeatherTheme() {
-        WeatherView(api = WeatherAPI())
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun HomePreview(){
-    WeatherTheme() {
-        Home(onNavigateToRoute = {}, api = WeatherAPI())
-    }
+    return tempInC.toInt().toString()
 }
