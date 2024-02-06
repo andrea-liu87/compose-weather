@@ -4,10 +4,9 @@ import api.WeatherAPI
 import home.WeatherView
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun App() {
-    val api = WeatherAPI()
+    val api = WeatherAPI(data.HttpClient)
     MaterialTheme {
         WeatherView(api)
     }

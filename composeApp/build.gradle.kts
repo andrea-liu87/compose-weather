@@ -49,33 +49,53 @@ kotlin {
     sourceSets {
         val ktorVersion = "2.3.2"
         val coroutineVersion = "1.6.4"
-        val composeVersion = "1.5.4"
 
-        val desktopMain by getting
+        val desktopMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+                implementation(compose.desktop.currentOs)
+            }
+        }
         
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.ktor.client.cio)
+            }
         }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
-            implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-            implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation(libs.essenty.parcelable)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.ktor.serialization.kotlinx.json)
+
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.ui)
+                @OptIn(ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation(libs.essenty.parcelable)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.serialization.kotlinx.json)
+            }
         }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
         }
     }
 }
@@ -130,7 +150,12 @@ buildkonfig {
     packageName = "com.andreasgift.kmpweatherapp"
 
     defaultConfigs {
-        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
-            "apiKey", ((project.findProperty("API_KEY") ?: "null") as String) )
+        val apiKey: String = gradleLocalProperties(rootDir).getProperty("API_KEY")
+
+        require(apiKey.isNotEmpty()) {
+            "Register your api key from developer.nytimes.com and place it in local.properties as `API_KEY`"
+        }
+
+        buildConfigField(STRING, "API_KEY", apiKey)
     }
 }

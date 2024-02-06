@@ -1,6 +1,6 @@
 package data
 
-import com.andreasgift.kmpweatherapp.BuildKonfig.apiKey
+import com.andreasgift.kmpweatherapp.BuildKonfig.API_KEY
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -12,7 +12,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 val HttpClient = HttpClient {
-    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+    install(ContentNegotiation) {
+        json(Json { ignoreUnknownKeys = true }) }
 
     install(Logging) { logger = Logger.SIMPLE }
 
@@ -20,7 +21,7 @@ val HttpClient = HttpClient {
         url {
             host = "api.openweathermap.org"
             protocol = URLProtocol.HTTPS
-            parameters.append("appid", apiKey)
+            parameters.append("appid", API_KEY)
         }
     }
 }

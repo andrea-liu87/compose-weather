@@ -1,6 +1,6 @@
 package api
 
-import com.andreasgift.kmpweatherapp.BuildKonfig.apiKey
+import com.andreasgift.kmpweatherapp.BuildKonfig.API_KEY
 import models.WeatherAPIResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -16,7 +16,7 @@ import utils.get
 class WeatherAPI(private val client: HttpClient)  {
     private val baseUrl = "https://api.openweathermap.org/data/2.5/weather?"
     private val apiUrl =
-        "https://api.openweathermap.org/data/2.5/weather?lat=45.5019&lon=-73.5674&appid=${apiKey}"
+        "https://api.openweathermap.org/data/2.5/weather?lat=45.5019&lon=-73.5674&appid=${API_KEY}"
 
     suspend fun getWeatherApiData(): Result<WeatherAPIResponse> =
         client.get { url { path("data/2.5/weather?lat=45.5019&lon=-73.5674") } }
@@ -45,7 +45,7 @@ class WeatherAPI(private val client: HttpClient)  {
         successFunction: (WeatherAPIResponse) -> Unit, failureFunction: (String) -> Unit) {
         GlobalScope.launch {
             try {
-                val url = "${baseUrl}lat=${latitude}&lon=${longitude}&appid=${apiKey}"
+                val url = "${baseUrl}lat=${latitude}&lon=${longitude}&appid=${API_KEY}"
                 val json = HttpClient().get(url) {}
                 Json.decodeFromString(WeatherAPIResponse.serializer(), json.bodyAsText())
                     .also(successFunction)
@@ -61,7 +61,7 @@ class WeatherAPI(private val client: HttpClient)  {
         successFunction: (WeatherAPIResponse) -> Unit, failureFunction: (String) -> Unit) {
         GlobalScope.launch {
             try {
-                val url = "${baseUrl}q=${place}&appid=${apiKey}"
+                val url = "${baseUrl}q=${place}&appid=${API_KEY}"
                 val json = HttpClient().get(url) {}
                 Json.decodeFromString(WeatherAPIResponse.serializer(), json.bodyAsText())
                     .also(successFunction)

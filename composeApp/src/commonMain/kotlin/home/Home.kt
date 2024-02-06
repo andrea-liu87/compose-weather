@@ -39,7 +39,8 @@ fun Home(
     ) {
         BottomSheetScaffold(
             sheetContent = { BottomSheetContent() },
-            sheetPeekHeight = LocalWindowInfo.current.containerSize.height.dp/3,
+            //sheetPeekHeight = LocalWindowInfo.current.containerSize.height.dp/3,
+            sheetPeekHeight = 600.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
