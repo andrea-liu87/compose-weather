@@ -43,6 +43,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            export(libs.decompose.router)
         }
     }
     
@@ -67,6 +68,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
+                api(libs.decompose.router)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
@@ -77,6 +79,11 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+
+                implementation(libs.molecule.runtime)
+                implementation(libs.decompose)
+                implementation(libs.decompose.compose.multiplatform)
+
                 implementation(libs.essenty.parcelable)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
@@ -132,6 +139,9 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+dependencies {
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 }
 
 compose.desktop {

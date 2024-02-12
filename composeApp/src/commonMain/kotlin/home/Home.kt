@@ -15,17 +15,19 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import api.WeatherAPI
 import component.TabBar
+import io.github.xxfast.decompose.router.rememberOnRoute
 import io.ktor.utils.io.core.*
+import models.WeatherAPIResponse
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun Home(
-    onNavigateToRoute: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    api: WeatherAPI
-) {
+fun Home() {
+    val viewModel: HomeViewModel =
+        rememberOnRoute(HomeViewModel::class) { savedState -> HomeViewModel(savedState) }
+
+    val state: HomeState by viewModel.states.collectAsState()
     val sheetState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
@@ -44,7 +46,7 @@ fun Home(
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
-                WeatherView(api = api)
+                WeatherView(state.weatherData ?: WeatherAPIResponse())
             }
         )
     }
@@ -52,7 +54,7 @@ fun Home(
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun WeatherView(api: WeatherAPI) {
+fun WeatherView(weather: WeatherAPIResponse) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -66,26 +68,11 @@ fun WeatherView(api: WeatherAPI) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            var name by remember { mutableStateOf("Montreal") }
-            var temp by remember { mutableStateOf("19") }
-            var descr by remember { mutableStateOf("Clear Sky") }
-            var highest by remember { mutableStateOf("23") }
-            var lowest by remember { mutableStateOf("12") }
-
-            api.getWeatherAPIData(
-                {
-                    name = it.name ?: ""
-                    temp = convertToC(it.main.temp ?: 0.00)
-                    descr = it.weather[0].description ?: ""
-                    highest = convertToC(it.main.tempMax ?: 0.00)
-                    lowest = convertToC(it.main.tempMin ?: 0.00)
-                },
-                {
-                    name = it
-                    temp = ""
-                    descr = ""
-                }
-            )
+            val name by remember { mutableStateOf(weather.name ?: "Montreal") }
+            val temp by remember { mutableStateOf(weather.main.temp) }
+            val descr by remember { mutableStateOf(weather.weather[0].description ?: "") }
+            val highest by remember { mutableStateOf(weather.main.tempMax) }
+            val lowest by remember { mutableStateOf(weather.main.tempMin) }
 
             Column(
                 modifier = Modifier
