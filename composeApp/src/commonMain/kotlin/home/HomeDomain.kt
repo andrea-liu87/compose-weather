@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import api.WeatherAPI
 import kotlinx.coroutines.flow.Flow
+import models.Location
+import models.Weather
 import models.WeatherAPIResponse
 
 @Composable
