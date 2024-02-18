@@ -63,6 +63,7 @@ kotlin {
                 implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.ktor.client.cio)
+                implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
             }
         }
 
@@ -89,6 +90,8 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.serialization.kotlinx.json)
+
+                api("org.lighthousegames:logging:1.3.0")
             }
         }
 

@@ -21,6 +21,8 @@ val HttpClient = HttpClient {
         url {
             host = "api.openweathermap.org"
             protocol = URLProtocol.HTTPS
+            parameters.append("lat", "45.5019")
+            parameters.append("lon", "-73.5674")
             parameters.append("appid", API_KEY)
         }
     }

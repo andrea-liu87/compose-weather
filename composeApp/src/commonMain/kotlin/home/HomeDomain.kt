@@ -1,13 +1,9 @@
 package home
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import api.WeatherAPI
 import kotlinx.coroutines.flow.Flow
-import models.Location
-import models.Weather
+import kotlinx.coroutines.launch
 import models.WeatherAPIResponse
 
 @Composable
@@ -16,7 +12,25 @@ fun HomeDomain(
     events: Flow<HomeEvent>,
     webService: WeatherAPI
 ): HomeState {
-    val weather: WeatherAPIResponse? by remember { mutableStateOf(initialState.weatherData) }
+    var weather: WeatherAPIResponse? by remember { mutableStateOf(initialState.weatherData) }
 
+    LaunchedEffect(Unit) {
+        weather = Loading
+
+        val fetchData: WeatherAPIResponse = webService.getWeatherApiData().getOrNull()
+            ?: return@LaunchedEffect // TODO: Handle errors
+
+        weather = fetchData
+    }
+
+    LaunchedEffect(Unit) {
+        events.collect { event ->
+            when(event) {
+                HomeEvent.Refresh -> launch {
+                    webService.getWeatherApiData().getOrNull()
+                }
+            }
+        }
+    }
     return HomeState(weather)
 }

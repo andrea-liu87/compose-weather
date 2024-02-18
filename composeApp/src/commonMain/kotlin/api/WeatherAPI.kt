@@ -19,55 +19,11 @@ class WeatherAPI(private val client: HttpClient)  {
         "https://api.openweathermap.org/data/2.5/weather?lat=45.5019&lon=-73.5674&appid=${API_KEY}"
 
     suspend fun getWeatherApiData(): Result<WeatherAPIResponse> =
-        client.get { url { path("data/2.5/weather?lat=45.5019&lon=-73.5674") } }
+        client.get {
+            url {
+                path("data/2.5/weather") } }
 
     suspend fun getWeatherApiDataFrLonLat(latitude: Double, longitude:Double): Result<WeatherAPIResponse> =
-        client.get { url {path("data/2.5/weather?lat=$latitude&lon=$longitude")} }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    fun getWeatherAPIData(
-        successFunction: (WeatherAPIResponse) -> Unit, failureFunction: (String) -> Unit) {
-        GlobalScope.launch() {
-            try {
-                val url = apiUrl
-                val json = HttpClient().get(url) {}
-                Json.decodeFromString(WeatherAPIResponse.serializer(), json.bodyAsText())
-                    .also(successFunction)
-            } catch (ex: Exception) {
-                failureFunction("${ex.message}")
-            }
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    fun getWeatherAPIDataLatLon(
-        latitude: Double, longitude:Double,
-        successFunction: (WeatherAPIResponse) -> Unit, failureFunction: (String) -> Unit) {
-        GlobalScope.launch {
-            try {
-                val url = "${baseUrl}lat=${latitude}&lon=${longitude}&appid=${API_KEY}"
-                val json = HttpClient().get(url) {}
-                Json.decodeFromString(WeatherAPIResponse.serializer(), json.bodyAsText())
-                    .also(successFunction)
-            } catch (ex: Exception) {
-                failureFunction("${ex.message} KEY: $apiUrl")
-            }
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    fun getWeatherAPIDataPlace(
-        place: String,
-        successFunction: (WeatherAPIResponse) -> Unit, failureFunction: (String) -> Unit) {
-        GlobalScope.launch {
-            try {
-                val url = "${baseUrl}q=${place}&appid=${API_KEY}"
-                val json = HttpClient().get(url) {}
-                Json.decodeFromString(WeatherAPIResponse.serializer(), json.bodyAsText())
-                    .also(successFunction)
-            } catch (ex: Exception) {
-                failureFunction("${ex.message} KEY: $apiUrl")
-            }
-        }
-    }
+        client.get { url {
+            path("data/2.5/weather?lat=$latitude&lon=$longitude")} }
 }

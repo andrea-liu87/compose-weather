@@ -20,6 +20,7 @@ import io.ktor.utils.io.core.*
 import models.WeatherAPIResponse
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.lighthousegames.logging.logging
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -46,7 +47,7 @@ fun Home() {
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
-                WeatherView(state.weatherData ?: WeatherAPIResponse())
+                WeatherView(state = state)
             }
         )
     }
@@ -54,7 +55,7 @@ fun Home() {
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun WeatherView(weather: WeatherAPIResponse) {
+fun WeatherView(state: HomeState) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -68,11 +69,11 @@ fun WeatherView(weather: WeatherAPIResponse) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val name by remember { mutableStateOf(weather.name ?: "Montreal") }
-            val temp by remember { mutableStateOf(weather.main.temp) }
-            val descr by remember { mutableStateOf(weather.weather[0].description ?: "") }
-            val highest by remember { mutableStateOf(weather.main.tempMax) }
-            val lowest by remember { mutableStateOf(weather.main.tempMin) }
+            val name = state.weatherData?.name ?: "Montreal"
+            val temp = state.weatherData?.main?.temp
+            val descr = state.weatherData?.weather?.get(0)?.description ?: ""
+            val highest = state.weatherData?.main?.tempMax
+            val lowest = state.weatherData?.main?.tempMin
 
             Column(
                 modifier = Modifier
@@ -82,9 +83,9 @@ fun WeatherView(weather: WeatherAPIResponse) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(name, style = MaterialTheme.typography.h3)
-                Text("$temp° C", style = MaterialTheme.typography.h2)
+                Text("${convertToC(temp ?: 0.0)}° C", style = MaterialTheme.typography.h2)
                 Text(descr, style = MaterialTheme.typography.body1, color = Color.Gray)
-                Text("H:$highest° L:$lowest°", style = MaterialTheme.typography.body1)
+                Text("H:${convertToC(highest ?: 0.0)}° L:${convertToC(lowest ?: 0.00)}°", style = MaterialTheme.typography.body1)
             }
             Image(
                 modifier = Modifier
