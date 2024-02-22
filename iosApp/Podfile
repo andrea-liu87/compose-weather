@@ -1,0 +1,9 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+install! 'cocoapods', :deterministic_uuids => false
+
+target 'iosApp' do
+    pod 'composeApp', :path => '/Users/andrea/Folders/KMP/ComposeWeather/composeApp/'
+end

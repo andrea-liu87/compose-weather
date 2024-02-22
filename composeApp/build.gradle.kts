@@ -17,6 +17,7 @@ buildscript {
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    kotlin("native.cocoapods")
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     id("com.codingfeline.buildkonfig") version "+"
@@ -44,6 +45,18 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
             export(libs.decompose.router)
+        }
+    }
+
+    cocoapods {
+        version = "1.0.0"
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        ios.deploymentTarget = "15.4"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "composeApp"
+            isStatic = true
         }
     }
     
