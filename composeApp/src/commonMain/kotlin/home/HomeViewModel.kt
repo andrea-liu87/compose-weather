@@ -4,7 +4,6 @@ import LocationService
 import api.WeatherAPI
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
-import data.HttpClient
 import io.github.xxfast.decompose.router.SavedStateHandle
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,7 +21,7 @@ class HomeViewModel(savedState: SavedStateHandle) : ViewModel() {
             weather = arrayListOf(Weather(description = "broken clouds"))
         )
     )
-    private val webService = WeatherAPI(HttpClient)
+    private val webService = WeatherAPI()
     private val locationService = LocationService()
 
     val states: StateFlow<HomeState> by lazy {
