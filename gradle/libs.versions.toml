@@ -15,6 +15,7 @@ compose-plugin = "1.5.12"
 decompose = "2.1.0-compose-experimental"
 decompose-router = "0.5.1"
 essenty = "1.2.0"
+google-PlayServicesAndroidLocation = "21.1.0"
 junit = "4.13.2"
 kotlin = "1.9.22"
 kotlinx-serialization = "1.5.1"
@@ -39,6 +40,7 @@ decompose-router = { module = "io.github.xxfast:decompose-router", version.ref =
 decompose-router-wear = { module = "io.github.xxfast:decompose-router-wear", version.ref = "decompose-router" }
 decompose-compose-multiplatform = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
 essenty-parcelable = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
+google-play-services-android-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-PlayServicesAndroidLocation" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }

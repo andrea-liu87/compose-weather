@@ -1,5 +1,6 @@
 package home
 
+import LocationService
 import api.WeatherAPI
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
@@ -22,10 +23,11 @@ class HomeViewModel(savedState: SavedStateHandle) : ViewModel() {
         )
     )
     private val webService = WeatherAPI(HttpClient)
+    private val locationService = LocationService()
 
     val states: StateFlow<HomeState> by lazy {
         moleculeFlow(RecompositionMode.Immediate) {
-            HomeDomain(initialState, eventsFlow, webService) }
+            HomeDomain(initialState, eventsFlow, webService, locationService) }
             .onEach { state -> savedState.set(state) }
             .stateIn(this, SharingStarted.Lazily, initialState)
     }

@@ -16,13 +16,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import home.HomeViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import theme.SolidPurple2
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun TabBar() {
+fun TabBar(viewModel: HomeViewModel) {
     val iconSize = 44
 
     Row(
@@ -34,7 +35,7 @@ fun TabBar() {
     ) {
         Image(
             modifier = Modifier
-                .clickable { }
+                .clickable { viewModel.onRefresh()}
                 .height(iconSize.dp)
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),

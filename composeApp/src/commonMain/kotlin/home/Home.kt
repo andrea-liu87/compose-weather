@@ -38,7 +38,7 @@ fun Home() {
         else 16.dp
 
     Scaffold(
-        bottomBar = { TabBar() }
+        bottomBar = { TabBar(viewModel) }
     ) {
         BottomSheetScaffold(
             sheetContent = { BottomSheetContent() },

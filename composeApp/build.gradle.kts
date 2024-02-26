@@ -77,6 +77,7 @@ kotlin {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.ktor.client.cio)
                 implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+                implementation("androidx.startup:startup-runtime:1.1.1")
             }
         }
 
@@ -103,6 +104,8 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.serialization.kotlinx.json)
+
+                implementation(libs.google.play.services.android.location)
 
                 api("org.lighthousegames:logging:1.3.0")
             }

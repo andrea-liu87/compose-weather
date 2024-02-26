@@ -1,5 +1,6 @@
 package home
 
+import LocationService
 import androidx.compose.runtime.*
 import api.WeatherAPI
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,8 @@ import models.WeatherAPIResponse
 fun HomeDomain(
     initialState: HomeState,
     events: Flow<HomeEvent>,
-    webService: WeatherAPI
+    webService: WeatherAPI,
+    locationService: LocationService
 ): HomeState {
     var weather: WeatherAPIResponse? by remember { mutableStateOf(initialState.weatherData) }
 
@@ -27,6 +29,7 @@ fun HomeDomain(
         events.collect { event ->
             when(event) {
                 HomeEvent.Refresh -> launch {
+                    locationService.getCurrentLocationOneTime()
                     webService.getWeatherApiData().getOrNull()
                 }
             }
