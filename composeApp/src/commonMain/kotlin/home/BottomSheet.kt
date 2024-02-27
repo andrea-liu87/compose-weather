@@ -24,7 +24,7 @@ fun BottomSheetContent() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black.copy(0.3f))
-            .padding(bottom = 40.dp),
+            .padding(bottom = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HandleDrag()

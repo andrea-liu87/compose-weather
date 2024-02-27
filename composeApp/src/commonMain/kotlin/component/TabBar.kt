@@ -29,7 +29,7 @@ fun TabBar(viewModel: HomeViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 40.dp)
+            .padding(bottom = 8.dp)
             .background(color = SolidPurple2.copy(0.5f), shape = BottomBarBackground()),
         horizontalArrangement = Arrangement.Center
     ) {
