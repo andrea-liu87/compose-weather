@@ -1,5 +1,6 @@
 package component
 
+import Platform
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,7 +30,7 @@ fun TabBar(viewModel: HomeViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .padding(bottom = 40.dp)
             .background(color = SolidPurple2.copy(0.5f), shape = BottomBarBackground()),
         horizontalArrangement = Arrangement.Center
     ) {

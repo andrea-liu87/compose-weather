@@ -15,9 +15,11 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import home.Home
 import io.github.xxfast.decompose.router.LocalRouterContext
 import io.github.xxfast.decompose.router.RouterContext
 import io.github.xxfast.decompose.router.defaultRouterContext
+import androidtheme.AndroidWeatherTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +52,9 @@ class MainActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalRouterContext provides rootComponentContext,
             ) {
-                App()
+                AndroidWeatherTheme {
+                    Home()
+                }
             }
         }
     }

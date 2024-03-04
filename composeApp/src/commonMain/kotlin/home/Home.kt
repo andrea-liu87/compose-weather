@@ -83,7 +83,7 @@ fun WeatherView(state: HomeState) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(name, style = MaterialTheme.typography.h3)
-                Text("${convertToC(temp ?: 0.0)}° C", style = MaterialTheme.typography.h2)
+                Text("${convertToC(temp ?: 0.0)}° C", style = MaterialTheme.typography.h3)
                 Text(descr, style = MaterialTheme.typography.body1, color = Color.Gray)
                 Text("H:${convertToC(highest ?: 0.0)}° L:${convertToC(lowest ?: 0.00)}°", style = MaterialTheme.typography.body1)
             }
