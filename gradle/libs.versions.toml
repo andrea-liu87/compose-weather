@@ -10,19 +10,25 @@ androidx-core-ktx = "1.12.0"
 androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
+buildkonfigGradlePlugin = "0.15.1"
 compose = "1.6.2"
 compose-plugin = "1.5.12"
+compose-multiplatform = "1.5.12"
 decompose = "2.1.0-compose-experimental"
 decompose-router = "0.5.1"
 essenty = "1.2.0"
 google-PlayServicesAndroidLocation = "21.1.0"
 junit = "4.13.2"
 kotlin = "1.9.22"
-kotlinx-serialization = "1.5.1"
+kotlinx-coroutines = "1.7.3"
 ktor = "2.3.5"
 molecule = "1.2.0"
+uiAndroid = "1.6.3"
+startupRuntime = "1.1.1"
 
 [libraries]
+agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+buildkonfig-gradle-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildkonfigGradlePlugin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -35,14 +41,16 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-multiplatform = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-router = { module = "io.github.xxfast:decompose-router", version.ref = "decompose-router" }
 decompose-router-wear = { module = "io.github.xxfast:decompose-router-wear", version.ref = "decompose-router" }
 decompose-compose-multiplatform = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
 essenty-parcelable = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
 google-play-services-android-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-PlayServicesAndroidLocation" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -52,6 +60,8 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 molecule-gradle-plugin = { module = "app.cash.molecule:molecule-gradle-plugin", version.ref = "molecule" }
 molecule-runtime = { module = "app.cash.molecule:molecule-runtime", version.ref = "molecule" }
+androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+androidx-startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

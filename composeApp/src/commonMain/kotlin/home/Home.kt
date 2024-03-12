@@ -1,5 +1,6 @@
 package home
 
+import BottomSheetScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,16 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
-import api.WeatherAPI
 import component.TabBar
 import io.github.xxfast.decompose.router.rememberOnRoute
-import io.ktor.utils.io.core.*
-import models.WeatherAPIResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import org.lighthousegames.logging.logging
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -29,19 +27,36 @@ fun Home() {
         rememberOnRoute(HomeViewModel::class) { savedState -> HomeViewModel(savedState) }
 
     val state: HomeState by viewModel.states.collectAsState()
-    val sheetState = rememberBottomSheetScaffoldState(
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
-    val scope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
     val radius =
-        if (sheetState.bottomSheetState.isExpanded) 0.dp
+        if (bottomSheetScaffoldState.bottomSheetState.isExpanded) 0.dp
         else 16.dp
+    val scaffoldState = rememberScaffoldState()
+    val bottomSheetActiveScreen by remember { mutableStateOf<BottomSheetScreen>(BottomSheetScreen.None) }
 
     Scaffold(
         bottomBar = { TabBar(viewModel) }
     ) {
         BottomSheetScaffold(
-            sheetContent = { BottomSheetContent() },
+            sheetContent = {
+                when (bottomSheetActiveScreen) {
+                    is BottomSheetScreen.ListScreen -> {
+                        openBottomSheet(bottomSheetScaffoldState, coroutineScope)
+                        //ListScreen()
+                    }
+
+                    is BottomSheetScreen.DetailScreen -> {
+                        openBottomSheet(bottomSheetScaffoldState, coroutineScope)
+                        //BottomSheetContent()
+                    }
+                    BottomSheetScreen.None -> {
+                        BottomSheetContent()
+                    }
+                }
+            },
             //tab row ?? + weatherbar 146 + tab bar 100 + padding 3x20
             sheetPeekHeight = 360.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
@@ -50,6 +65,18 @@ fun Home() {
                 WeatherView(state = state)
             }
         )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private fun openBottomSheet(
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
+    coroutineScope: CoroutineScope
+) {
+    if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
+        coroutineScope.launch {
+            bottomSheetScaffoldState.bottomSheetState.expand()
+        }
     }
 }
 

@@ -9,10 +9,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
-        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.15.1")
-        classpath("org.jetbrains.compose:compose-gradle-plugin:1.6.0-beta01")
+        classpath(libs.buildkonfig.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.agp)
+        classpath(libs.compose.multiplatform)
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.kotlin.serialization)
+        classpath(libs.molecule.gradle.plugin)
     }
 }
 
@@ -30,7 +33,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
@@ -43,7 +46,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "composeApp"
             isStatic = true
             export(libs.decompose.router)
         }
@@ -66,9 +69,6 @@ kotlin {
     }
     
     sourceSets {
-        val ktorVersion = "2.3.2"
-        val coroutineVersion = "1.6.4"
-
         val desktopMain by getting {
             dependencies {
                 implementation(libs.ktor.client.cio)
@@ -96,9 +96,8 @@ kotlin {
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+                implementation(libs.kotlinx.coroutines)
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
 
                 implementation(libs.molecule.runtime)
                 implementation(libs.decompose)
@@ -157,8 +156,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
@@ -166,6 +165,8 @@ android {
 }
 dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.startup.runtime)
 }
 
 compose.desktop {
