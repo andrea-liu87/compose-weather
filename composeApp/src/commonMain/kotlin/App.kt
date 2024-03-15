@@ -1,15 +1,15 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 import home.Home
 import models.Weather
 import theme.WeatherTheme
 
-sealed class BottomSheetScreen {
-    data object ListScreen : BottomSheetScreen()
-    data class DetailScreen(
-        val weather: Weather? = null
-    ) : BottomSheetScreen()
-    data object None : BottomSheetScreen()
+@Parcelize
+sealed class MainScreen : Parcelable {
+    data object HomeScreen : MainScreen()
+    data object ListScreen : MainScreen()
 }
 @Composable
 fun App() {

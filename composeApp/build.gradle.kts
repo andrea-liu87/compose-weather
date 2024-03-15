@@ -13,7 +13,6 @@ buildscript {
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.agp)
         classpath(libs.compose.multiplatform)
-        classpath(libs.kotlin.gradle.plugin)
         classpath(libs.kotlin.serialization)
         classpath(libs.molecule.gradle.plugin)
     }
@@ -21,12 +20,12 @@ buildscript {
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    kotlin("native.cocoapods")
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     id("com.codingfeline.buildkonfig") version "+"
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
@@ -62,10 +61,6 @@ kotlin {
             baseName = "composeApp"
             isStatic = true
         }
-
-        // Maps custom Xcode configuration to NativeBuildType
-        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
     
     sourceSets {

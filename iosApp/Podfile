@@ -1,9 +1,5 @@
-use_frameworks!
-
-platform :ios, '16.0'
-
-install! 'cocoapods', :deterministic_uuids => false
-
 target 'iosApp' do
-    pod 'composeApp', :path => '../composeApp'
+  use_frameworks!
+  platform :ios, '16.0'  # ios.deploymentTarget
+  pod 'composeApp', :path => '../composeApp'
 end
