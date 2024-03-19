@@ -18,9 +18,9 @@ import utils.get
 
 
 class WeatherAPI()  {
-    private val baseUrl = "https://api.openweathermap.org/data/2.5/weather?"
+    private val baseUrl = "https://api.openweathermap.org/data/3.0/onecall?"
     private val apiUrl =
-        "https://api.openweathermap.org/data/2.5/weather?lat=45.5019&lon=-73.5674&appid=${API_KEY}"
+        "https://api.openweathermap.org/data/3.0/onecall?lat=45.5019&lon=-73.5674&exclude=hourly&appid=${API_KEY}"
 
     private fun buildUrl(lat: Double, lon: Double): HttpClient =
         HttpClient {
@@ -36,6 +36,7 @@ class WeatherAPI()  {
                     protocol = URLProtocol.HTTPS
                     parameters.append("lat", lat.toString())
                     parameters.append("lon", lon.toString())
+                    parameters.append("exclude", "minutely" )
                     parameters.append("appid", API_KEY)
                 }
             }
@@ -53,6 +54,7 @@ class WeatherAPI()  {
                 protocol = URLProtocol.HTTPS
                 parameters.append("lat", "45.5019")
                 parameters.append("lon", "-73.5674")
+                parameters.append("exclude", "minutely" )
                 parameters.append("appid", API_KEY)
             }
         }
@@ -62,9 +64,9 @@ class WeatherAPI()  {
     suspend fun getWeatherApiData(): Result<WeatherAPIResponse> =
         defaultHttpClient.get {
             url {
-                path("data/2.5/weather") } }
+                path("data/3.0/onecall") } }
 
     suspend fun getWeatherApiDataFrLonLat(latitude: Double, longitude:Double): Result<WeatherAPIResponse> =
         buildUrl(latitude, longitude).get { url {
-            path("data/2.5/weather")} }
+            path("data/3.0/onecall")} }
 }

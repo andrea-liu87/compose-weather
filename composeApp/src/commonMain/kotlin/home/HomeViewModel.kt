@@ -7,7 +7,10 @@ import app.cash.molecule.moleculeFlow
 import io.github.xxfast.decompose.router.SavedStateHandle
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import models.Current
+import models.Daily
 import models.Main
+import models.Temp
 import models.Weather
 import models.WeatherAPIResponse
 import navigation.ViewModel
@@ -16,9 +19,9 @@ class HomeViewModel(savedState: SavedStateHandle) : ViewModel() {
     private val eventsFlow: MutableSharedFlow<HomeEvent> = MutableSharedFlow(5)
     private val initialState: HomeState = savedState.get() ?: HomeState(
         WeatherAPIResponse(
-            name="Montreal",
-            main = Main(temp = 272.71, tempMax = 276.14, tempMin = 270.92),
-            weather = arrayListOf(Weather(description = "broken clouds"))
+            timezone =  "Montreal",
+            current = Current(temp = 230.0, weather = arrayListOf( Weather(description = "Cloudy Day"))),
+            daily = arrayListOf(Daily(temp = Temp(max = 270.0, min = 200.0)))
         )
     )
     private val webService = WeatherAPI()

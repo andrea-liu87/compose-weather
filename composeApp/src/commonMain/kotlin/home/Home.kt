@@ -110,11 +110,11 @@ fun WeatherView(state: HomeState) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val name = state.weatherData?.name ?: "Montreal"
-            val temp = state.weatherData?.main?.temp
-            val descr = state.weatherData?.weather?.get(0)?.description ?: ""
-            val highest = state.weatherData?.main?.tempMax
-            val lowest = state.weatherData?.main?.tempMin
+            val name = state.weatherData?.timezone ?: "Montreal"
+            val temp = state.weatherData?.current?.temp
+            val descr = state.weatherData?.current?.weather?.get(0)?.description ?: ""
+            val highest = state.weatherData?.daily?.get(0)?.temp?.max
+            val lowest = state.weatherData?.daily?.get(0)?.temp?.min
 
             Column(
                 modifier = Modifier

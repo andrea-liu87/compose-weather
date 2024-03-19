@@ -8,28 +8,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 data class WeatherAPIResponse (
-    @SerialName("coord"      ) var coord      : Coord?            = Coord(),
-    @SerialName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
-    @SerialName("base"       ) var base       : String?            = null,
-    @SerialName("main"       ) var main       : Main = Main(),
-    @SerialName("visibility" ) var visibility : Int?               = null,
-    @SerialName("wind"       ) var wind       : Wind?              = Wind(),
-    @SerialName("snow"       ) var snow       : Snow?              = Snow(),
-    @SerialName("rain"       ) var rain       : Rain?              = Rain(),
-    @SerialName("clouds"     ) var clouds     : Clouds?            = Clouds(),
-    @SerialName("dt"         ) var dt         : Int?               = null,
-    @SerialName("sys"        ) var sys        : Sys?               = Sys(),
-    @SerialName("timezone"   ) var timezone   : Int?               = null,
-    @SerialName("id"         ) var id         : Int?               = null,
-    @SerialName("name"       ) var name       : String?            = null,
-    @SerialName("cod"        ) var cod        : Int?               = null
-): Parcelable
 
-@Serializable
-@Parcelize
-data class Coord (
-    @SerialName("lon" ) var lon : Double? = null,
-    @SerialName("lat" ) var lat : Double? = null
+    @SerialName("lat"             ) var lat            : Double?             = null,
+    @SerialName("lon"             ) var lon            : Double?             = null,
+    @SerialName("timezone"        ) var timezone       : String?             = null,
+    @SerialName("timezone_offset" ) var timezoneOffset : Int?                = null,
+    @SerialName("current"         ) var current        : Current?            = Current(),
+    @SerialName("minutely"        ) var minutely       : ArrayList<Minutely> = arrayListOf(),
+    @SerialName("daily"           ) var daily          : ArrayList<Daily>    = arrayListOf()
+
 ): Parcelable
 
 @Serializable
@@ -43,6 +30,65 @@ data class Weather (
 
 @Serializable
 @Parcelize
+data class Current (
+
+    @SerialName("dt"         ) var dt         : Int?               = null,
+    @SerialName("sunrise"    ) var sunrise    : Int?               = null,
+    @SerialName("sunset"     ) var sunset     : Int?               = null,
+    @SerialName("temp"       ) var temp       : Double?            = null,
+    @SerialName("feels_like" ) var feelsLike  : Double?            = null,
+    @SerialName("pressure"   ) var pressure   : Int?               = null,
+    @SerialName("humidity"   ) var humidity   : Int?               = null,
+    @SerialName("dew_point"  ) var dewPoint   : Double?            = null,
+    @SerialName("uvi"        ) var uvi        : Int?               = null,
+    @SerialName("clouds"     ) var clouds     : Int?               = null,
+    @SerialName("visibility" ) var visibility : Int?               = null,
+    @SerialName("wind_speed" ) var windSpeed  : Double?            = null,
+    @SerialName("wind_deg"   ) var windDeg    : Int?               = null,
+    @SerialName("wind_gust"  ) var windGust   : Double?            = null,
+    @SerialName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf()
+
+): Parcelable
+
+@Serializable
+@Parcelize
+data class Minutely (
+
+    @SerialName("dt"            ) var dt            : Int? = null,
+    @SerialName("precipitation" ) var precipitation : Int? = null
+
+): Parcelable
+
+@Serializable
+@Parcelize
+data class Daily (
+
+    @SerialName("dt"         ) var dt        : Int?               = null,
+    @SerialName("sunrise"    ) var sunrise   : Int?               = null,
+    @SerialName("sunset"     ) var sunset    : Int?               = null,
+    @SerialName("moonrise"   ) var moonrise  : Int?               = null,
+    @SerialName("moonset"    ) var moonset   : Int?               = null,
+    @SerialName("moon_phase" ) var moonPhase : Double?            = null,
+    @SerialName("summary"    ) var summary   : String?            = null,
+    @SerialName("temp"       ) var temp      : Temp?              = Temp(),
+    @SerialName("feels_like" ) var feelsLike : FeelsLike?         = FeelsLike(),
+    @SerialName("pressure"   ) var pressure  : Int?               = null,
+    @SerialName("humidity"   ) var humidity  : Int?               = null,
+    @SerialName("dew_point"  ) var dewPoint  : Double?            = null,
+    @SerialName("wind_speed" ) var windSpeed : Double?            = null,
+    @SerialName("wind_deg"   ) var windDeg   : Int?               = null,
+    @SerialName("wind_gust"  ) var windGust  : Double?            = null,
+    @SerialName("weather"    ) var weather   : ArrayList<Weather> = arrayListOf(),
+    @SerialName("clouds"     ) var clouds    : Int?               = null,
+    @SerialName("pop"        ) var pop       : Double?            = null,
+    @SerialName("uvi"        ) var uvi       : Double?            = null
+
+): Parcelable
+
+
+
+@Serializable
+@Parcelize
 data class Main (
     @SerialName("temp"       ) var temp      : Double? = null,
     @SerialName("feels_like" ) var feelsLike : Double? = null,
@@ -52,6 +98,30 @@ data class Main (
     @SerialName("humidity"   ) var humidity  : Int?    = null,
     @SerialName("sea_level"  ) var seaLevel  : Int?    = null,
     @SerialName("grnd_level" ) var grndLevel : Int?    = null
+): Parcelable
+
+@Serializable
+@Parcelize
+data class FeelsLike (
+
+    @SerialName("day"   ) var day   : Double? = null,
+    @SerialName("night" ) var night : Double? = null,
+    @SerialName("eve"   ) var eve   : Double? = null,
+    @SerialName("morn"  ) var morn  : Double? = null
+
+): Parcelable
+
+@Serializable
+@Parcelize
+data class Temp (
+
+    @SerialName("day"   ) var day   : Double? = null,
+    @SerialName("min"   ) var min   : Double? = null,
+    @SerialName("max"   ) var max   : Double? = null,
+    @SerialName("night" ) var night : Double? = null,
+    @SerialName("eve"   ) var eve   : Double? = null,
+    @SerialName("morn"  ) var morn  : Double? = null
+
 ): Parcelable
 
 @Serializable
