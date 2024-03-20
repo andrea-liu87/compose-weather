@@ -70,7 +70,7 @@ fun MainHomeScreen() {
         bottomBar = { TabBar(viewModel) }
     ) {
         BottomSheetScaffold(
-            sheetContent = { BottomSheetContent() },
+            sheetContent = { BottomSheetContent(state) },
             //tab row ?? + weatherbar 146 + tab bar 100 + padding 3x20
             sheetPeekHeight = 360.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),

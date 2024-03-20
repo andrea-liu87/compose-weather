@@ -15,6 +15,7 @@ data class WeatherAPIResponse (
     @SerialName("timezone_offset" ) var timezoneOffset : Int?                = null,
     @SerialName("current"         ) var current        : Current?            = Current(),
     @SerialName("minutely"        ) var minutely       : ArrayList<Minutely> = arrayListOf(),
+    @SerialName("hourly"          ) var hourly         : ArrayList<Hourly>   = arrayListOf(),
     @SerialName("daily"           ) var daily          : ArrayList<Daily>    = arrayListOf()
 
 ): Parcelable
@@ -40,7 +41,7 @@ data class Current (
     @SerialName("pressure"   ) var pressure   : Int?               = null,
     @SerialName("humidity"   ) var humidity   : Int?               = null,
     @SerialName("dew_point"  ) var dewPoint   : Double?            = null,
-    @SerialName("uvi"        ) var uvi        : Int?               = null,
+    @SerialName("uvi"        ) var uvi        : Double?               = null,
     @SerialName("clouds"     ) var clouds     : Int?               = null,
     @SerialName("visibility" ) var visibility : Int?               = null,
     @SerialName("wind_speed" ) var windSpeed  : Double?            = null,
@@ -56,6 +57,28 @@ data class Minutely (
 
     @SerialName("dt"            ) var dt            : Int? = null,
     @SerialName("precipitation" ) var precipitation : Int? = null
+
+): Parcelable
+
+@Serializable
+@Parcelize
+data class Hourly (
+
+    @SerialName("dt"         ) var dt         : Int?               = null,
+    @SerialName("temp"       ) var temp       : Double?            = null,
+    @SerialName("feels_like" ) var feelsLike  : Double?            = null,
+    @SerialName("pressure"   ) var pressure   : Int?               = null,
+    @SerialName("humidity"   ) var humidity   : Int?               = null,
+    @SerialName("dew_point"  ) var dewPoint   : Double?            = null,
+    @SerialName("uvi"        ) var uvi        : Double?               = null,
+    @SerialName("clouds"     ) var clouds     : Int?               = null,
+    @SerialName("visibility" ) var visibility : Int?               = null,
+    @SerialName("wind_speed" ) var windSpeed  : Double?            = null,
+    @SerialName("wind_deg"   ) var windDeg    : Int?               = null,
+    @SerialName("wind_gust"  ) var windGust   : Double?            = null,
+    @SerialName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
+    @SerialName("pop"        ) var pop        : Double?               = null,
+    @SerialName("snow"       ) var snow       : Snow?              = Snow()
 
 ): Parcelable
 

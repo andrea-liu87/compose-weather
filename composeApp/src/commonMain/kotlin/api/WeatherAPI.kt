@@ -20,7 +20,7 @@ import utils.get
 class WeatherAPI()  {
     private val baseUrl = "https://api.openweathermap.org/data/3.0/onecall?"
     private val apiUrl =
-        "https://api.openweathermap.org/data/3.0/onecall?lat=45.5019&lon=-73.5674&exclude=hourly&appid=${API_KEY}"
+        "https://api.openweathermap.org/data/3.0/onecall?lat=45.5019&lon=-73.5674&exclude=minutely&appid=${API_KEY}"
 
     private fun buildUrl(lat: Double, lon: Double): HttpClient =
         HttpClient {

@@ -11,12 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import component.HourForecast
+import org.lighthousegames.logging.logging
 import theme.SolidPurple
 import theme.UnselectedTabTitle
 import theme.secondary
 
 @Composable
-fun BottomSheetContent() {
+fun BottomSheetContent(state: HomeState) {
     val titles = listOf("Hourly Forecast", "Weekly Forecast")
     var tabIndex by remember { mutableStateOf(0) }
 
@@ -58,7 +59,7 @@ fun BottomSheetContent() {
             verticalArrangement = Arrangement.Top
         ) {
             if (tabIndex == 0){
-                HourForecast()
+                HourForecast(state.weatherData?.hourly)
             } else {
                 Text(text = "Weekly Forecast Page")
             }
