@@ -24,10 +24,10 @@ fun HomeDomain(
     LaunchedEffect(Unit) {
         weather = Loading
 
-        val fetchData: WeatherAPIResponse = webService.getWeatherApiData().getOrNull()
-            ?: return@LaunchedEffect // TODO: Handle errors
-
-        weather = fetchData
+        location = locationService.getCurrentLocationOneTime()
+        withContext(Dispatchers.IO){
+            weather = webService.getWeatherApiDataFrLonLat(location!!.latitude, location!!.longitude).getOrNull()
+        }
     }
 
     LaunchedEffect(Unit) {
