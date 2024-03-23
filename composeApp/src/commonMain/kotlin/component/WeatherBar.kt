@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -24,15 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import home.convertToC
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import models.Hourly
-import org.jetbrains.compose.resources.painterResource
+import org.lighthousegames.logging.logging
 import theme.SolidBlue
 
 @Composable
@@ -55,43 +53,54 @@ fun WeatherBar(label: String, temp:String){
 
 @Composable
 fun HourForecast(hourList: ArrayList<Hourly>?){
-    if (hourList!= null) {
-        LazyRow(
-            modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            items(hourList) { hourly ->
-                WeatherBar(
-                hourly.dt?.let { timeStampToString(it.toLong()) } ?: "__",
-                    "${hourly.temp?.let { convertToC(it) }}°")
+    if (hourList!= null && hourList.size > 0) {
+            LazyRow(
+                modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 16.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                itemsIndexed(hourList) { index, hourly ->
+                    if (index <= 24) {
+                        WeatherBar(
+                            label = timeStampToString(hourly.dt!!.toLong()),
+                            temp = "${convertToC(hourly.temp ?: 0.00)}°"
+                        )
+                    }
+                }
             }
-        }
     } else {
-        var time = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour
-        val listS = arrayListOf<Int>()
-        for (i in 0..24) {
-            time += 1
-            if (time == 24){time = 0}
-            listS.add(time)
+        HourForecastEmptyData()
+    }
+}
+
+@Composable
+fun HourForecastEmptyData(){
+    val time = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour
+    val listS = arrayListOf<Int>()
+    for (i in 0..24) {
+        if (time + i < 24) {
+            listS.add(time + i)
+        } else {
+            listS.add(time + i - 24)
         }
-        LazyRow(
-            modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            items(listS) { hourly ->
-                WeatherBar(
-                     if (hourly > 10){"$hourly"} else {"0$hourly"},
-                    "__")
-            }
+    }
+    LazyRow(
+        modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        items(listS) { hourly ->
+            WeatherBar(
+                if (hourly >= 10){"$hourly"} else {"0$hourly"},
+                "__")
         }
     }
 }
 
 fun timeStampToString(netDate: Long): String {
     return try {
-        val instant = Instant.fromEpochMilliseconds(netDate)
-        val hour = instant.toLocalDateTime(TimeZone.currentSystemDefault()).hour
-        if (hour > 10) {
+        val instant = Instant.fromEpochSeconds(netDate)
+        val hour = instant.toLocalDateTime(TimeZone.currentSystemDefault()).time.hour
+        if (hour >= 10) {
             return hour.toString()
         } else {
             return "0$hour"

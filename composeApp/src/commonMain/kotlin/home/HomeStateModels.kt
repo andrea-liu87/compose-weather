@@ -9,7 +9,8 @@ val Loading: Nothing? = null
 
 @Parcelize
 data class HomeState(
-    val weatherData: WeatherAPIResponse?
+    val weatherData: WeatherAPIResponse?,
+    val location: Location?
 ): Parcelable
 
 sealed interface HomeEvent {

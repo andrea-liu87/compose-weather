@@ -8,6 +8,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import models.Location
 import models.WeatherAPIResponse
 
 @Composable
@@ -18,6 +19,7 @@ fun HomeDomain(
     locationService: LocationService
 ): HomeState {
     var weather: WeatherAPIResponse? by remember { mutableStateOf(initialState.weatherData) }
+    var location: Location? by remember { mutableStateOf(initialState.location) }
 
     LaunchedEffect(Unit) {
         weather = Loading
@@ -32,13 +34,13 @@ fun HomeDomain(
         events.collect { event ->
             when(event) {
                 HomeEvent.Refresh -> launch {
-                    val location = locationService.getCurrentLocationOneTime()
+                    location = locationService.getCurrentLocationOneTime()
                     withContext(Dispatchers.IO){
-                        weather = webService.getWeatherApiDataFrLonLat(location.latitude, location.longitude).getOrNull()
+                        weather = webService.getWeatherApiDataFrLonLat(location!!.latitude, location!!.longitude).getOrNull()
                     }
                 }
             }
         }
     }
-    return HomeState(weather)
+    return HomeState(weather, location)
 }
