@@ -5,10 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -55,9 +57,9 @@ fun WeatherBar(label: String, temp:String){
 fun HourForecast(hourList: ArrayList<Hourly>?){
     if (hourList!= null && hourList.size > 0) {
             LazyRow(
-                modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 16.dp)
+                modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                horizontalArrangement = Arrangement.Start
             ) {
                 itemsIndexed(hourList) { index, hourly ->
                     if (index <= 24) {
@@ -65,6 +67,7 @@ fun HourForecast(hourList: ArrayList<Hourly>?){
                             label = timeStampToString(hourly.dt!!.toLong()),
                             temp = "${convertToC(hourly.temp ?: 0.00)}°"
                         )
+                        Box(Modifier.width(5.dp))
                     }
                 }
             }
@@ -85,13 +88,14 @@ fun HourForecastEmptyData(){
         }
     }
     LazyRow(
-        modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 16.dp),
+        modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         items(listS) { hourly ->
             WeatherBar(
                 if (hourly >= 10){"$hourly"} else {"0$hourly"},
                 "__")
+            Box(Modifier.width(5.dp))
         }
     }
 }
