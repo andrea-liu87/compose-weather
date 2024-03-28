@@ -4,10 +4,13 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
 import org.lighthousegames.logging.logging
 import platform.CoreLocation.CLDeviceOrientationPortrait
+import platform.CoreLocation.CLGeocodeCompletionHandler
+import platform.CoreLocation.CLGeocoder
 import platform.CoreLocation.CLHeading
 import platform.CoreLocation.CLLocation
 import platform.CoreLocation.CLLocationManager
 import platform.CoreLocation.CLLocationManagerDelegateProtocol
+import platform.CoreLocation.CLPlacemark
 import platform.CoreLocation.kCLDistanceFilterNone
 import platform.CoreLocation.kCLLocationAccuracyBest
 import platform.CoreLocation.kCLLocationAccuracyBestForNavigation
@@ -37,7 +40,15 @@ actual class LocationService actual constructor() {
             didUpdateLocations.firstOrNull()?.let {
                 val location = it as CLLocation
                 location.coordinate.useContents {
-                    onLocationUpdate?.invoke(Location(latitude, longitude))
+                    CLGeocoder().reverseGeocodeLocation(location) { list, error ->
+                        if (error == null && list?.get(0) is CLPlacemark) {
+                            onLocationUpdate?.invoke(
+                                Location(latitude, longitude, (list[0] as CLPlacemark).subAdministrativeArea)
+                            )
+                        } else {
+                            onLocationUpdate?.invoke(Location(latitude, longitude))
+                        }
+                    }
                 }
 
             }
