@@ -71,8 +71,8 @@ fun MainHomeScreen() {
     ) {
         BottomSheetScaffold(
             sheetContent = { BottomSheetContent(state) },
-            //tab row ?? + weatherbar 146 + tab bar 100 + padding 3x20
-            sheetPeekHeight = 360.dp,
+            //tab row ?? + weatherbar 84+ tab bar 100 + padding 3x20
+            sheetPeekHeight = 294.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {

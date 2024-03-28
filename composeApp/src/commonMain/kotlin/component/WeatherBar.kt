@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,14 +33,16 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import models.Hourly
-import org.lighthousegames.logging.logging
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import theme.SolidBlue
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun WeatherBar(label: String, temp:String){
+fun WeatherBar(label: String, temp:String, icon: String){
     Column(
         modifier = Modifier
-            .height(146.dp)
+            .height(84.dp)
             .background(color = SolidBlue.copy(0.2f), shape = RoundedCornerShape(percent = 100))
             .border(BorderStroke(2.dp, Color.White.copy(0.2f)), shape = RoundedCornerShape(percent = 100))
             .padding(vertical = 16.dp, horizontal = 8.dp)
@@ -48,7 +51,9 @@ fun WeatherBar(label: String, temp:String){
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(modifier = Modifier.padding(top = 8.dp), text = label, style = TextStyle(color = Color.White, fontSize = 20.sp))
-        Image( Icons.Filled.ArrowBack, contentDescription = "")
+        Image(painter = painterResource(icon),
+            contentDescription = "weather",
+            contentScale = ContentScale.Fit)
         Text(modifier = Modifier.padding(bottom = 8.dp), text = temp,style = TextStyle(color = androidx.compose.ui.graphics.Color.White, fontSize = 24.sp))
     }
 }
@@ -65,7 +70,8 @@ fun HourForecast(hourList: ArrayList<Hourly>?){
                     if (index <= 24) {
                         WeatherBar(
                             label = timeStampToString(hourly.dt!!.toLong()),
-                            temp = "${convertToC(hourly.temp ?: 0.00)}°"
+                            temp = "${convertToC(hourly.temp ?: 0.00)}°",
+                            icon = getWeatherIcon(hourly.weather[0].description ?: "clear sky")
                         )
                         Box(Modifier.width(5.dp))
                     }
@@ -74,6 +80,15 @@ fun HourForecast(hourList: ArrayList<Hourly>?){
     } else {
         HourForecastEmptyData()
     }
+}
+
+fun getWeatherIcon(description : String): String {
+    if (description.contains("wind")) return "icon_windy.png"
+    if (description.contains("snow")) return "icon_windy.png"
+    if (description.contains("cloud")) return "icon_windy.png"
+    return if (description.contains("rain")) "icon_rainy.png"
+    else
+        "icon_rainy.png"
 }
 
 @Composable
@@ -94,7 +109,9 @@ fun HourForecastEmptyData(){
         items(listS) { hourly ->
             WeatherBar(
                 if (hourly >= 10){"$hourly"} else {"0$hourly"},
-                "__")
+                "__",
+                getWeatherIcon("clear sky")
+            )
             Box(Modifier.width(5.dp))
         }
     }
