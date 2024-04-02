@@ -3,6 +3,7 @@ package com.andreasgift.composeweather
 import App
 import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,21 +31,32 @@ class MainActivity : ComponentActivity() {
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
             when {
-                permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
+                permissions.getOrDefault(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    false
+                ) -> {
+                    setContent(rootComponentContext)
                 }
-                permissions.getOrDefault(android.Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
-                } else -> {
-                // No location access granted.
-            }
+
+                permissions.getOrDefault(
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    false
+                ) -> {
+                    setContent(rootComponentContext)
+                }
+
+                else -> {
+                    Toast.makeText(applicationContext, "Please granted location permission", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
         locationPermissionRequest.launch(arrayOf(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
 
+    private fun setContent(rootComponentContext: RouterContext) {
         setContent {
             val systemUiController = rememberSystemUiController()
             systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = true)

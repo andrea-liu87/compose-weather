@@ -42,7 +42,7 @@ import theme.SolidBlue
 fun WeatherBar(label: String, temp:String, icon: String){
     Column(
         modifier = Modifier
-            .height(84.dp)
+            .height(120.dp)
             .background(color = SolidBlue.copy(0.2f), shape = RoundedCornerShape(percent = 100))
             .border(BorderStroke(2.dp, Color.White.copy(0.2f)), shape = RoundedCornerShape(percent = 100))
             .padding(vertical = 16.dp, horizontal = 8.dp)
