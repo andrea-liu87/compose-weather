@@ -14,6 +14,7 @@ This is a Weather App build with Kotlin Multiplatform project targeting Android,
 - 🚏 [Decompose](https://github.com/arkivanov/Decompose) + [Router](https://github.com/xxfast/Decompose-Router); for navigation
 - 🧪 [Molecule](https://github.com/cashapp/molecule); for modeling state
 - 🔖 [KMLogging](https://github.com/LighthouseGames/KmLogging); for logging
+- 📍 [Google Geolocation](https://developers.google.com/maps/documentation/geolocation/overview); for Geolocation
 
 ## Showcase
 

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.2"
+agp = "8.3.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -11,20 +11,20 @@ androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
 buildkonfigGradlePlugin = "0.15.1"
-compose = "1.6.2"
-compose-plugin = "1.5.12"
-compose-multiplatform = "1.5.12"
+compose = "1.6.5"
+compose-plugin = "1.6.2"
+compose-multiplatform = "1.6.2"
 decompose = "2.1.0-compose-experimental"
 decompose-router = "0.5.1"
 essenty = "1.2.0"
 google-PlayServicesAndroidLocation = "21.1.0"
 junit = "4.13.2"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlinx-coroutines = "1.7.3"
 kotlinx-datetime = "0.4.0"
-ktor = "2.3.5"
+ktor = "3.0.0-wasm2"
 molecule = "1.2.0"
-uiAndroid = "1.6.3"
+uiAndroid = "1.6.5"
 startupRuntime = "1.1.1"
 
 [libraries]
@@ -42,6 +42,7 @@ google-play-services-android-location = { module = "com.google.android.gms:play-
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
