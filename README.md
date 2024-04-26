@@ -5,8 +5,8 @@
 ![badge-ios](http://img.shields.io/badge/platform-ios-EAEAEA.svg?style=flat)
 
 This is a Weather App build with Kotlin Multiplatform project targeting Android, iOS, Desktop.
-[Design UI](https://www.figma.com/file/WcIDvSIYffe9CPHu0d6HE8/Weather-App-UI-Design-(Community)?type=design&node-id=2-811&mode=design&t=PP1EohUkLxOm39Tp-0)
-[Data Source : Open Weather API] (https://openweathermap.org/api)
+</br>[Design UI](https://www.figma.com/file/WcIDvSIYffe9CPHu0d6HE8/Weather-App-UI-Design-(Community)?type=design&node-id=2-811&mode=design&t=PP1EohUkLxOm39Tp-0)
+</br>[Data Source : Open Weather API](https://openweathermap.org/api)
 
 ## The stack
 - 🧩 [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform); for shared UI
