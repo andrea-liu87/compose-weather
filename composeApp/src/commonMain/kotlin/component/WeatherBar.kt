@@ -23,10 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seiko.imageloader.rememberImagePainter
 import home.convertToC
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DayOfWeek
@@ -44,9 +46,12 @@ import kotlin.time.Duration.Companion.days
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun WeatherBar(label: String, temp:String, icon: String){
+    val painterResource = rememberImagePainter("https://openweathermap.org/img/wn/$icon@2x.png")
+
     Column(
         modifier = Modifier
-            .height(120.dp)
+            .height(150.dp)
+            .width(60.dp)
             .background(color = SolidBlue.copy(0.2f), shape = RoundedCornerShape(percent = 100))
             .border(BorderStroke(2.dp, Color.White.copy(0.2f)), shape = RoundedCornerShape(percent = 100))
             .padding(vertical = 16.dp, horizontal = 8.dp)
@@ -55,9 +60,7 @@ fun WeatherBar(label: String, temp:String, icon: String){
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(modifier = Modifier.padding(top = 8.dp), text = label, style = TextStyle(color = Color.White, fontSize = 20.sp))
-        Image(painter = painterResource(DrawableResource(icon)),
-            contentDescription = "weather",
-            contentScale = ContentScale.Fit)
+        Image(painterResource, "weather icon", contentScale = ContentScale.Fit)
         Text(modifier = Modifier.padding(bottom = 8.dp), text = temp,style = TextStyle(color = androidx.compose.ui.graphics.Color.White, fontSize = 24.sp))
     }
 }
@@ -75,7 +78,7 @@ fun HourForecast(hourList: ArrayList<Hourly>?){
                         WeatherBar(
                             label = timeStampToString(hourly.dt!!.toLong()),
                             temp = "${convertToC(hourly.temp ?: 0.00)}°",
-                            icon = getWeatherIcon(hourly.weather[0].description ?: "clear sky")
+                            icon = hourly.weather[0].icon ?: "10n"
                         )
                         Box(Modifier.width(5.dp))
                     }
@@ -99,7 +102,7 @@ fun WeeklyForecast(dailyList: ArrayList<Daily>?){
                     WeatherBar(
                         label = timeStampToString(daily.dt!!.toLong(), 1),
                         temp = "${convertToC(daily.temp?.day ?: 0.00)}°",
-                        icon = getWeatherIcon(daily.weather[0].description ?: "clear sky")
+                        icon = daily.weather[0].icon ?: "10n"
                     )
                     Box(Modifier.width(5.dp))
                 }

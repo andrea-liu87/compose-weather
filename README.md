@@ -11,6 +11,7 @@ This is a Weather App build with Kotlin Multiplatform project targeting Android,
 ## The stack
 - 🧩 [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform); for shared UI
 - 🌐 [Ktor](https://github.com/ktorio/ktor); for networking
+- 📷 [Image Loader](https://github.com/qdsfdhvh/compose-imageloader); for displaying image
 - 📦 [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization); for content negotiation
 - 🚏 [Decompose](https://github.com/arkivanov/Decompose) + [Router](https://github.com/xxfast/Decompose-Router); for navigation
 - 🧪 [Molecule](https://github.com/cashapp/molecule); for modeling state

@@ -109,6 +109,8 @@ kotlin {
                 api("org.lighthousegames:logging:1.3.0")
 
                 implementation(libs.kotlinx.datetime)
+
+                api("io.github.qdsfdhvh:image-loader:1.7.8")
             }
         }
 
