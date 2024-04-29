@@ -182,10 +182,11 @@ buildkonfig {
     packageName = "com.andreasgift.kmpweatherapp"
 
     defaultConfigs {
-        val apiKey: String = gradleLocalProperties(rootDir).getProperty("API_KEY")
+        val apiKey: String = "629adc362b515d46302d43753020131f"
+            //gradleLocalProperties(rootDir).getProperty("API_KEY")
 
         require(apiKey.isNotEmpty()) {
-            "Register your api key from developer.nytimes.com and place it in local.properties as `API_KEY`"
+            "Register your api key from open weather and place it in local.properties as `API_KEY`"
         }
 
         buildConfigField(STRING, "API_KEY", apiKey)

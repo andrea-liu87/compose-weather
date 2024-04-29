@@ -29,13 +29,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import home.convertToC
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import models.Daily
 import models.Hourly
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import theme.SolidBlue
+import kotlin.time.Duration.Companion.days
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -51,7 +55,7 @@ fun WeatherBar(label: String, temp:String, icon: String){
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(modifier = Modifier.padding(top = 8.dp), text = label, style = TextStyle(color = Color.White, fontSize = 20.sp))
-        Image(painter = painterResource(icon),
+        Image(painter = painterResource(DrawableResource(icon)),
             contentDescription = "weather",
             contentScale = ContentScale.Fit)
         Text(modifier = Modifier.padding(bottom = 8.dp), text = temp,style = TextStyle(color = androidx.compose.ui.graphics.Color.White, fontSize = 24.sp))
@@ -82,6 +86,30 @@ fun HourForecast(hourList: ArrayList<Hourly>?){
     }
 }
 
+@Composable
+fun WeeklyForecast(dailyList: ArrayList<Daily>?){
+    if (dailyList!= null && dailyList.size > 0) {
+        LazyRow(
+            modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            itemsIndexed(dailyList) { index, daily ->
+                if (index <= 7) {
+                    WeatherBar(
+                        label = timeStampToString(daily.dt!!.toLong(), 1),
+                        temp = "${convertToC(daily.temp?.day ?: 0.00)}°",
+                        icon = getWeatherIcon(daily.weather[0].description ?: "clear sky")
+                    )
+                    Box(Modifier.width(5.dp))
+                }
+            }
+        }
+    } else {
+        WeeklyForecastEmptyData()
+    }
+}
+
 fun getWeatherIcon(description : String): String {
     if (description.contains("wind")) return "icon_windy.png"
     if (description.contains("snow")) return "icon_windy.png"
@@ -104,7 +132,7 @@ fun HourForecastEmptyData(){
     }
     LazyRow(
         modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
+        horizontalArrangement = Arrangement.Start
     ) {
         items(listS) { hourly ->
             WeatherBar(
@@ -117,16 +145,52 @@ fun HourForecastEmptyData(){
     }
 }
 
-fun timeStampToString(netDate: Long): String {
-    return try {
-        val instant = Instant.fromEpochSeconds(netDate)
-        val hour = instant.toLocalDateTime(TimeZone.currentSystemDefault()).time.hour
-        if (hour >= 10) {
-            return hour.toString()
-        } else {
-            return "0$hour"
+@Composable
+fun WeeklyForecastEmptyData(){
+    val time = Clock.System.now()
+    val listS = arrayListOf<Int>()
+    for (i in 0..7) {
+        val day = time.plus(i.days).toLocalDateTime(TimeZone.currentSystemDefault()).dayOfMonth
+        listS.add(day)
+    }
+    LazyRow(
+        modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        items(listS) { weekly ->
+            WeatherBar(
+                if (weekly >= 10){"$weekly"} else {"0$weekly"},
+                "__",
+                getWeatherIcon("clear sky")
+            )
+            Box(Modifier.width(5.dp))
         }
-    } catch (e: Exception) {
-        e.toString()
+    }
+}
+
+fun timeStampToString(netDate: Long, mode: Int = 0): String {
+    val instant = Instant.fromEpochSeconds(netDate)
+    if (mode == 1){
+        return try {
+            val day = instant.toLocalDateTime(TimeZone.currentSystemDefault()).dayOfMonth
+            if (day >= 10) {
+                return day.toString()
+            } else {
+                return "0$day"
+            }
+        } catch (e: Exception) {
+            e.toString()
+        }
+    } else {
+        return try {
+            val hour = instant.toLocalDateTime(TimeZone.currentSystemDefault()).time.hour
+            if (hour >= 10) {
+                return hour.toString()
+            } else {
+                return "0$hour"
+            }
+        } catch (e: Exception) {
+            e.toString()
+        }
     }
 }

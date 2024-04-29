@@ -27,6 +27,7 @@ import io.github.xxfast.decompose.router.rememberRouter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import list.ListScreen
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -101,7 +102,7 @@ fun WeatherView(state: HomeState) {
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painterResource("background.png"),
+                painterResource(DrawableResource("background.png")),
                 contentScale = ContentScale.FillBounds
             )
     ) {
@@ -133,7 +134,7 @@ fun WeatherView(state: HomeState) {
                     .fillMaxSize()
                     .padding(vertical = 12.dp)
                     .weight(1.5f),
-                painter = painterResource("house2.png"),
+                painter = painterResource(DrawableResource("house2.png")),
                 contentDescription = "house",
                 contentScale = ContentScale.Fit
             )

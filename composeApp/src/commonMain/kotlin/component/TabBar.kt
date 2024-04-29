@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import home.HomeViewModel
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import theme.SolidPurple2
@@ -41,14 +42,14 @@ fun TabBar(viewModel: HomeViewModel) {
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
             contentScale = ContentScale.Fit,
-            painter = painterResource("location.png"),
+            painter = painterResource(DrawableResource("location.png")),
             contentDescription = "location"
         )
         Image(
             modifier = Modifier
                 .clickable { }
                 .height(100.dp),
-            painter = painterResource("mainadd_btn.xml"),
+            painter = painterResource(DrawableResource("mainadd_btn.xml")),
             contentDescription = "add button"
         )
         Image(
@@ -57,7 +58,7 @@ fun TabBar(viewModel: HomeViewModel) {
                 .height(iconSize.dp)
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
-            painter = painterResource("seemore.png"),
+            painter = painterResource(DrawableResource("seemore.png")),
             contentScale = ContentScale.Fit,
             contentDescription = "see more"
         )

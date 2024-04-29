@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import component.HourForecast
+import component.WeeklyForecast
 import org.lighthousegames.logging.logging
 import theme.SolidPurple
 import theme.UnselectedTabTitle
@@ -61,7 +62,7 @@ fun BottomSheetContent(state: HomeState) {
             if (tabIndex == 0){
                 HourForecast(state.weatherData?.hourly)
             } else {
-                Text(text = "Weekly Forecast Page")
+                WeeklyForecast(state.weatherData?.daily)
             }
         }
     }

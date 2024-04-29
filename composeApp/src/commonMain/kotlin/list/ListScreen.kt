@@ -18,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import home.HomeState
 import home.convertToC
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -28,7 +29,7 @@ fun ListScreen() {
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painterResource("background.png"),
+                painterResource(DrawableResource("background.png")),
                 contentScale = ContentScale.FillBounds
             )
     ) {
