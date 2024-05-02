@@ -55,7 +55,7 @@ actual class LocationService actual constructor() {
             val response = requestCurrentLocation()
             val result : LocationResponse = response.body<LocationResponse>()
             if (result.location != null ) {
-                return@withContext result.location?.latitude?.let { Location(it, result.location?.longitude) }
+                return@withContext Location(result.location?.latitude ?: 0.00, result.location?.longitude ?: 0.00)
             } else {
                 return@withContext Location(0.00 , 0.00)
             }

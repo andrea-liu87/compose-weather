@@ -86,7 +86,7 @@ kotlin {
                 api(libs.decompose.router)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 implementation(compose.ui)
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
