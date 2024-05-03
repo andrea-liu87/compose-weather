@@ -25,13 +25,12 @@ import models.LocationResponse
 import models.WeatherAPIResponse
 import utils.get
 import java.net.InetAddress
-import java.net.http.HttpResponse
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+
 
 actual class LocationService actual constructor() {
+    val gmapsKey = BuildKonfig.GMapsKey
     private val urlPost =
-        "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAKHKmr7-OiEFtyk1FqUb-DoJkxs6ag8tc"
+        "https://www.googleapis.com/geolocation/v1/geolocate?key=$gMapsKey"
 
 
 //    {

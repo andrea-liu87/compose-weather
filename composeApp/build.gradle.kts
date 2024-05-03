@@ -1,8 +1,8 @@
+
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.konan.properties.Properties
 
 buildscript {
     repositories {
@@ -181,16 +181,19 @@ compose.desktop {
 }
 
 buildkonfig {
+    val propertiesProj = Properties()
     packageName = "com.andreasgift.kmpweatherapp"
 
     defaultConfigs {
-        val apiKey: String = "629adc362b515d46302d43753020131f"
-            //gradleLocalProperties(rootDir).getProperty("API_KEY")
+        propertiesProj.load(project.rootProject.file("local.properties").inputStream())
+        val apiKey: String = propertiesProj.getProperty("API_KEY")
+        val GMapsKey: String = propertiesProj.getProperty("GOOGLE_MAPS_KEY")
 
         require(apiKey.isNotEmpty()) {
             "Register your api key from open weather and place it in local.properties as `API_KEY`"
         }
 
         buildConfigField(STRING, "API_KEY", apiKey)
+        buildConfigField(STRING, GMapsKey, GMapsKey)
     }
 }
