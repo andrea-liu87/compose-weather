@@ -36,6 +36,8 @@ kotlin {
             }
         }
     }
+
+    task("testClasses")
     
     jvm("desktop")
     
@@ -87,6 +89,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(compose.material)
                 implementation(compose.ui)
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
@@ -194,6 +197,6 @@ buildkonfig {
         }
 
         buildConfigField(STRING, "API_KEY", apiKey)
-        buildConfigField(STRING, GMapsKey, GMapsKey)
+        buildConfigField(STRING, "GOOGLE_MAPS_KEY", GMapsKey)
     }
 }

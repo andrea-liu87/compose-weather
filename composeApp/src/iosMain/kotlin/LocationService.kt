@@ -1,5 +1,5 @@
+import co.touchlab.stately.concurrency.AtomicReference
 import models.Location
-import androidx.compose.runtime.AtomicReference
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
 import org.lighthousegames.logging.logging

@@ -18,6 +18,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.pred
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.pop
+import component.LoadingWidget
 import component.TabBar
 import io.github.xxfast.decompose.router.LocalRouterContext
 import io.github.xxfast.decompose.router.Router
@@ -30,6 +31,7 @@ import list.ListScreen
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import models.WeatherAPIResponse
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -106,6 +108,7 @@ fun WeatherView(state: HomeState) {
                 contentScale = ContentScale.FillBounds
             )
     ) {
+        if (state.weatherData == Loading) { LoadingWidget() }
         Column(
             modifier = Modifier
                 .fillMaxSize(),

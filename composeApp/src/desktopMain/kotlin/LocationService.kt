@@ -1,4 +1,4 @@
-import com.andreasgift.kmpweatherapp.BuildKonfig
+import com.andreasgift.kmpweatherapp.BuildKonfig.GOOGLE_MAPS_KEY
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -28,18 +28,10 @@ import java.net.InetAddress
 
 
 actual class LocationService actual constructor() {
-    val gmapsKey = BuildKonfig.GMapsKey
+
     private val urlPost =
-        "https://www.googleapis.com/geolocation/v1/geolocate?key=$gMapsKey"
+        "https://www.googleapis.com/geolocation/v1/geolocate?key=${GOOGLE_MAPS_KEY}"
 
-
-//    {
-//        "macAddress": "9c:1c:12:b0:45:f1",
-//        "signalStrength": -43,
-//        "signalToNoiseRatio": 0,
-//        "channel": 11,
-//        "age": 0
-//    }
 
     private val client: HttpClient =
         HttpClient {
