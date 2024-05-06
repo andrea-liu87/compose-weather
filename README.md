@@ -21,6 +21,7 @@ This is a Weather App build with Kotlin Multiplatform project targeting Android,
 ## Showcase
 
 ### Android
+<img src="https://github.com/andrea-liu87/compose-weather/blob/master/docs/android.gif" width="150" height="280">
 
 ### iOS
 
