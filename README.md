@@ -27,3 +27,4 @@ This is a Weather App build with Kotlin Multiplatform project targeting Android,
 <img src="[https://github.com/andrea-liu87/compose-weather/blob/master/docs/android.gif](https://github.com/andrea-liu87/compose-weather/blob/master/docs/ios.gif" width="220" height="320">
 
 ### Desktop
+<img src="[https://github.com/andrea-liu87/compose-weather/blob/master/docs/android.gif](https://github.com/andrea-liu87/compose-weather/blob/master/docs/desktop.gif" width="360" height="220">
