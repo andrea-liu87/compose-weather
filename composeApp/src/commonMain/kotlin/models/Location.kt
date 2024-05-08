@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 data class Location(
-    val latitude: Double,
-    val longitude: Double,
+    @SerialName("lat") val latitude: Double,
+    @SerialName("lng") val longitude: Double,
     val name: String? = null
 ): Parcelable
 
@@ -30,6 +30,6 @@ data class LocationRequest (
 data class LocationResponse (
 
     @SerialName("location" ) var location : Location? = null,
-    @SerialName("accuracy" ) var accuracy : Int?      = null
+    //@SerialName("accuracy" ) var accuracy : Int?      = null
 
 ): Parcelable
