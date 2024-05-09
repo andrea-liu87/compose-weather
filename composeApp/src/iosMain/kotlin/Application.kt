@@ -2,7 +2,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.interop.LocalUIViewController
 import androidx.compose.ui.window.ComposeUIViewController
-import home.Home
+import presentation.home.Home
 import io.github.xxfast.decompose.router.LocalRouterContext
 import io.github.xxfast.decompose.router.RouterContext
 import kotlinx.cinterop.BetaInteropApi
@@ -14,7 +14,7 @@ import kotlinx.cinterop.toCValues
 import platform.Foundation.NSStringFromClass
 import platform.UIKit.UIApplicationMain
 import platform.UIKit.UIViewController
-import theme.WeatherTheme
+import presentation.theme.WeatherTheme
 
 @OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 fun main() {
