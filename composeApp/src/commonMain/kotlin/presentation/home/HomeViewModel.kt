@@ -4,6 +4,7 @@ import data.LocationService
 import data.api.WeatherAPI
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
+import data.weatherDataSaved
 import io.github.xxfast.decompose.router.SavedStateHandle
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ class HomeViewModel(savedState: SavedStateHandle) : ViewModel() {
 
     val states: StateFlow<HomeState> by lazy {
         moleculeFlow(RecompositionMode.Immediate) {
-            HomeDomain(initialState, eventsFlow, webService, locationService) }
+            HomeDomain(initialState, eventsFlow, webService, locationService, weatherDataSaved) }
             .onEach { state -> savedState.set(state) }
             .stateIn(this, SharingStarted.Lazily, initialState)
     }

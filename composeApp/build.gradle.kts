@@ -69,7 +69,9 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 implementation(libs.ktor.client.cio)
+                implementation(libs.kstore.file)
                 implementation(compose.desktop.currentOs)
+                implementation(libs.harawata.appdirs)
             }
         }
         
@@ -78,6 +80,7 @@ kotlin {
                 implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.ktor.client.cio)
+                implementation(libs.kstore.file)
                 implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
                 implementation("androidx.startup:startup-runtime:1.1.1")
             }
@@ -106,6 +109,7 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.kstore)
 
                 implementation(libs.google.play.services.android.location)
 
@@ -127,6 +131,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(libs.ktor.client.darwin)
+                implementation(libs.kstore.file)
             }
         }
     }
@@ -169,6 +174,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation(libs.androidx.ui.android)
     implementation(libs.androidx.startup.runtime)
+    implementation(libs.androidx.datastore.core.android)
 }
 
 compose.desktop {

@@ -4,11 +4,15 @@ import com.andreasgift.kmpweatherapp.BuildKonfig.API_KEY
 import models.WeatherAPIResponse
 import io.ktor.client.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.*
+import io.ktor.client.plugins.cache.storage.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
+import okio.FileSystem
 
 
 class WeatherAPI()  {
@@ -17,12 +21,16 @@ class WeatherAPI()  {
         "https://api.openweathermap.org/data/3.0/onecall?lat=45.5019&lon=-73.5674&exclude=minutely&appid=${API_KEY}"
 
     private fun buildUrl(lat: Double, lon: Double): HttpClient =
-        HttpClient {
+        HttpClient() {
+            install(HttpCache)
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }
 
-            install(Logging) { logger = Logger.SIMPLE }
+            install(Logging) {
+                logger = Logger.SIMPLE
+                level = LogLevel.BODY
+            }
 
             defaultRequest {
                 url {
@@ -37,6 +45,8 @@ class WeatherAPI()  {
         }
 
     val defaultHttpClient = HttpClient {
+        install(HttpCache)
+
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true }) }
 

@@ -3,6 +3,7 @@ package data
 import com.andreasgift.kmpweatherapp.BuildKonfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.Logger
@@ -33,6 +34,7 @@ actual class LocationService actual constructor() {
 
     private fun buildUrlGeocoding(lat: Double, lon: Double): HttpClient =
         HttpClient {
+            install(HttpCache)
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }
@@ -51,6 +53,7 @@ actual class LocationService actual constructor() {
 
     private val client: HttpClient =
         HttpClient {
+            install(HttpCache)
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }

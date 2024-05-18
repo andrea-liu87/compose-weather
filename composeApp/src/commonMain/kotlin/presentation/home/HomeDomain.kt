@@ -3,6 +3,7 @@ package presentation.home
 import data.LocationService
 import androidx.compose.runtime.*
 import data.api.WeatherAPI
+import io.github.xxfast.kstore.KStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -16,17 +17,19 @@ fun HomeDomain(
     initialState: HomeState,
     events: Flow<HomeEvent>,
     webService: WeatherAPI,
-    locationService: LocationService
+    locationService: LocationService,
+    store: KStore<WeatherAPIResponse>
 ): HomeState {
     var weather: WeatherAPIResponse? by remember { mutableStateOf(initialState.weatherData) }
     var location: Location? by remember { mutableStateOf(initialState.location) }
 
     LaunchedEffect(Unit) {
-        weather = Loading
+        weather = store.get() ?: Loading
 
         location = locationService.getCurrentLocationOneTime()
         withContext(Dispatchers.IO){
             weather = webService.getWeatherApiDataFrLonLat(location!!.latitude, location!!.longitude).getOrNull()
+            store.update { weather?.copy(timezone = location?.name, lat = location!!.latitude, lon = location!!.longitude) }
         }
     }
 
@@ -37,6 +40,7 @@ fun HomeDomain(
                     location = locationService.getCurrentLocationOneTime()
                     withContext(Dispatchers.IO){
                         weather = webService.getWeatherApiDataFrLonLat(location!!.latitude, location!!.longitude).getOrNull()
+                        store.update { weather?.copy(timezone = location?.name, lat = location!!.latitude, lon = location!!.longitude) }
                     }
                 }
             }

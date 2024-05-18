@@ -15,6 +15,10 @@ import platform.Foundation.NSStringFromClass
 import platform.UIKit.UIApplicationMain
 import platform.UIKit.UIViewController
 import presentation.theme.WeatherTheme
+import bussiness.di.appStorage
+import io.github.xxfast.kstore.file.utils.DocumentDirectory
+import io.github.xxfast.kstore.utils.ExperimentalKStoreApi
+import platform.Foundation.NSFileManager
 
 @OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 fun main() {
@@ -28,10 +32,12 @@ fun main() {
     }
 }
 
+@OptIn(ExperimentalKStoreApi::class)
 fun HomeUIViewController(routerContext: RouterContext): UIViewController = ComposeUIViewController {
     /**
      * TODO: Maybe we can use [LocalUIViewController], but there's no real way to hook into [ComposeWindow.viewDidLoad]
      * */
+    appStorage = NSFileManager.defaultManager.DocumentDirectory?.relativePath
     BoxWithConstraints {
         CompositionLocalProvider(
             LocalRouterContext provides routerContext
