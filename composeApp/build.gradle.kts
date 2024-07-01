@@ -113,7 +113,7 @@ kotlin {
 
                 implementation(libs.google.play.services.android.location)
 
-                api("org.lighthousegames:logging:1.3.0")
+                api("org.lighthousegames:logging:1.4.2")
 
                 implementation(libs.kotlinx.datetime)
 
