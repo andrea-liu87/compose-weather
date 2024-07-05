@@ -29,6 +29,9 @@ molecule = "1.2.0"
 uiAndroid = "1.6.5"
 startupRuntime = "1.1.1"
 datastoreCoreAndroid = "1.1.1"
+dokka = "1.9.20"
+publish = "0.28.0"
+poko = "0.16.0"
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -71,3 +74,7 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
+poko = { id = "dev.drewhamilton.poko", version.ref = "poko" }
+convention-multiplatform = { id = "convention.multiplatform", version = "0" }

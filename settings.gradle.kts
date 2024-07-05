@@ -20,3 +20,5 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include (":compass-core", ":compass-geolocation",
+    ":compass-geolocation")
