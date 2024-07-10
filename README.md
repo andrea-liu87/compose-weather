@@ -1,3 +1,9 @@
+![kotlin-version](https://img.shields.io/badge/kotlin-2.0.0-blue?logo=kotlin)
+
+![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
+![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
+![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
+![badge-js](http://img.shields.io/badge/platform-web-FDD835.svg?style=flat)
 # ComposeWeather
 
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
@@ -26,7 +32,7 @@ This is a Weather App build with Kotlin Multiplatform project targeting Android,
 <img src="https://github.com/andrea-liu87/compose-weather/blob/master/docs/android.gif" width="220" height="320">
 
 ### iOS
-<img src="[https://github.com/andrea-liu87/compose-weather/blob/master/docs/android.gif](https://github.com/andrea-liu87/compose-weather/blob/master/docs/ios.gif" width="220" height="320">
+<img src="https://github.com/andrea-liu87/compose-weather/blob/master/docs/ios.gif" width="220" height="320">
 
 ### Desktop
-<img src="[https://github.com/andrea-liu87/compose-weather/blob/master/docs/android.gif](https://github.com/andrea-liu87/compose-weather/blob/master/docs/desktop.gif" width="360" height="220">
+<img src="https://github.com/andrea-liu87/compose-weather/blob/master/docs/desktop.gif" width="360" height="220">
