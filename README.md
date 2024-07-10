@@ -1,9 +1,5 @@
 ![kotlin-version](https://img.shields.io/badge/kotlin-2.0.0-blue?logo=kotlin)
 
-![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
-![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
-![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
-![badge-js](http://img.shields.io/badge/platform-web-FDD835.svg?style=flat)
 # ComposeWeather
 
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
