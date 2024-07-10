@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.poko)
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)
@@ -38,11 +39,33 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(projects.compassCore)
-            // TODO ADd these
-            api(projects.compassPermissions)
+            api(project(":compass-core"))
+            api(project(":compass-permissions"))
 
             implementation(libs.kotlinx.coroutines)
         }
+    }
+}
+
+android {
+    namespace = "dev.jordond.compass"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+//    packaging {
+//        resources {
+//            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+//        }
+//    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    dependencies {
+        debugImplementation(libs.compose.ui.tooling)
     }
 }

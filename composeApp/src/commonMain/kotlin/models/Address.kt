@@ -6,7 +6,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Parcelize
 data class GeocodingResponse (
 
     @SerialName("plus_code" ) var plusCode : PlusCode?          = PlusCode(),

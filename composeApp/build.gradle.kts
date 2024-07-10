@@ -20,6 +20,7 @@ buildscript {
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     id("com.codingfeline.buildkonfig") version "+"
@@ -83,6 +84,7 @@ kotlin {
                 implementation(libs.kstore.file)
                 implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
                 implementation("androidx.startup:startup-runtime:1.1.1")
+                implementation(project(":compass-geolocation-mobile"))
             }
         }
 
@@ -94,6 +96,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.material)
                 implementation(compose.ui)
+                implementation(compose.components.resources)
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
@@ -118,6 +121,7 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
 
                 api("io.github.qdsfdhvh:image-loader:1.7.8")
+                implementation(project(":compass-geolocation"))
             }
         }
 
@@ -139,19 +143,12 @@ kotlin {
 
 android {
     namespace = "com.andreasgift.composeweather"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = 34
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
-    defaultConfig {
-        applicationId = "com.andreasgift.composeweather"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
 //    packaging {
 //        resources {
 //            excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -166,6 +163,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    defaultConfig {
+        targetSdk = 34
+        minSdk = 21
+    }
+    buildToolsVersion = "34.0.0"
+
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }

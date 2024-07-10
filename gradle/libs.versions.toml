@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.2"
+agp = "8.5.0"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -10,19 +10,24 @@ androidx-core-ktx = "1.12.0"
 androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
+androidx-activity = "1.9.0"
+androidx-fragment = "1.8.0"
+androidx-startup = "1.1.1"
 buildkonfigGradlePlugin = "0.15.1"
 compose = "1.6.5"
-compose-plugin = "1.6.2"
-compose-multiplatform = "1.6.2"
+compose-plugin = "1.6.11"
+compose-multiplatform = "1.6.11"
 decompose = "2.1.0-compose-experimental"
 decompose-router = "0.5.1"
 essenty = "1.2.0"
 google-PlayServicesAndroidLocation = "21.1.0"
 harawata-appdirs = "1.2.1"
 junit = "4.13.2"
-kotlin = "1.9.23"
+kermit = "2.0.4"
+kotlin = "2.0.0"
 kotlinx-coroutines = "1.7.3"
 kotlinx-datetime = "0.4.0"
+kotlinx-atomicfu = "0.24.0"
 kstore = "0.7.1"
 ktor = "2.3.8"
 molecule = "1.2.0"
@@ -37,6 +42,10 @@ poko = "0.16.0"
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 buildkonfig-gradle-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildkonfigGradlePlugin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
+kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "kotlinx-atomicfu" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-multiplatform = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
@@ -46,6 +55,7 @@ decompose-compose-multiplatform = { module = "com.arkivanov.decompose:extensions
 essenty-parcelable = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
 google-play-services-android-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-PlayServicesAndroidLocation" }
 harawata-appdirs = { module = "net.harawata:appdirs", version.ref = "harawata-appdirs" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -78,3 +88,4 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
 poko = { id = "dev.drewhamilton.poko", version.ref = "poko" }
 convention-multiplatform = { id = "convention.multiplatform", version = "0" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

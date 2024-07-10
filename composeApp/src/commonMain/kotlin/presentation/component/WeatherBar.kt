@@ -108,12 +108,12 @@ fun WeeklyForecast(dailyList: ArrayList<Daily>?){
 }
 
 fun getWeatherIcon(description : String): String {
-    if (description.contains("wind")) return "icon_windy.png"
-    if (description.contains("snow")) return "icon_windy.png"
-    if (description.contains("cloud")) return "icon_windy.png"
-    return if (description.contains("rain")) "icon_rainy.png"
+    if (description.contains("wind")) return "files/icon_windy.png"
+    if (description.contains("snow")) return "files/icon_windy.png"
+    if (description.contains("cloud")) return "files/icon_windy.png"
+    return if (description.contains("rain")) "files/icon_rainy.png"
     else
-        "icon_rainy.png"
+        "files/icon_rainy.png"
 }
 
 @Composable

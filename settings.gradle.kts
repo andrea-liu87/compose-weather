@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include (":compass-core", ":compass-geolocation",
-    ":compass-geolocation")
+    ":compass-permissions",":compass-geolocation-mobile",
+    ":compass-permissions-mobile",":compass-tools-android")

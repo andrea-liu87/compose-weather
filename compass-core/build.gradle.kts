@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.poko)
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)
@@ -48,7 +49,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.andreasgift.composeweather"
+    namespace = "dev.jordond.compass"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
 //    packaging {
