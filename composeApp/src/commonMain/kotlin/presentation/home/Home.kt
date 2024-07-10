@@ -18,6 +18,9 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.pred
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.pop
+import composeweather.composeapp.generated.resources.Res
+import composeweather.composeapp.generated.resources.background
+import composeweather.composeapp.generated.resources.house2
 import presentation.component.LoadingWidget
 import presentation.component.TabBar
 import io.github.xxfast.decompose.router.LocalRouterContext
@@ -103,7 +106,7 @@ fun WeatherView(state: HomeState) {
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painterResource(DrawableResource("background.png")),
+                painterResource(Res.drawable.background),
                 contentScale = ContentScale.FillBounds
             )
     ) {
@@ -136,7 +139,7 @@ fun WeatherView(state: HomeState) {
                     .fillMaxSize()
                     .padding(vertical = 12.dp)
                     .weight(1.5f),
-                painter = painterResource(DrawableResource("house2.png")),
+                painter = painterResource(Res.drawable.house2),
                 contentDescription = "house",
                 contentScale = ContentScale.Fit
             )

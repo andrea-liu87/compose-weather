@@ -16,6 +16,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import composeweather.composeapp.generated.resources.Res
+import composeweather.composeapp.generated.resources.location
+import composeweather.composeapp.generated.resources.mainadd_btn
+import composeweather.composeapp.generated.resources.seemore
 import presentation.home.HomeViewModel
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -41,14 +45,14 @@ fun TabBar(viewModel: HomeViewModel) {
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
             contentScale = ContentScale.Fit,
-            painter = painterResource(DrawableResource("location.png")),
+            painter = painterResource(Res.drawable.location),
             contentDescription = "location"
         )
         Image(
             modifier = Modifier
                 .clickable { }
                 .height(100.dp),
-            painter = painterResource(DrawableResource("mainadd_btn.xml")),
+            painter = painterResource(Res.drawable.mainadd_btn),
             contentDescription = "add button"
         )
         Image(
@@ -57,7 +61,7 @@ fun TabBar(viewModel: HomeViewModel) {
                 .height(iconSize.dp)
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
-            painter = painterResource(DrawableResource("seemore.png")),
+            painter = painterResource(Res.drawable.seemore),
             contentScale = ContentScale.Fit,
             contentDescription = "see more"
         )

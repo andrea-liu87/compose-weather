@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import composeweather.composeapp.generated.resources.Res
+import composeweather.composeapp.generated.resources.background
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -21,7 +23,7 @@ fun ListScreen() {
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painterResource(DrawableResource("background.png")),
+                painterResource(Res.drawable.background),
                 contentScale = ContentScale.FillBounds
             )
     ) {
