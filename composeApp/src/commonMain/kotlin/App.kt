@@ -1,13 +1,15 @@
 import androidx.compose.runtime.Composable
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
+import kotlinx.serialization.Serializable
+
 import presentation.home.Home
 import presentation.theme.WeatherTheme
 
-@Parcelize
-sealed class MainScreen : Parcelable {
-    data object HomeScreen : MainScreen()
-    data object ListScreen : MainScreen()
+@Serializable
+sealed class MainScreen  {
+    @Serializable
+    object HomeScreen : MainScreen()
+    @Serializable
+    object ListScreen : MainScreen()
 }
 @Composable
 fun App() {

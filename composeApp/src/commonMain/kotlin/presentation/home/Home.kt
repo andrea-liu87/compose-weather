@@ -7,16 +7,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.predictiveBackAnimation
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.slide
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.pop
 import composeweather.composeapp.generated.resources.Res
 import composeweather.composeapp.generated.resources.background
@@ -24,14 +24,14 @@ import composeweather.composeapp.generated.resources.house2
 import presentation.component.LoadingWidget
 import presentation.component.TabBar
 import io.github.xxfast.decompose.router.LocalRouterContext
-import io.github.xxfast.decompose.router.Router
-import io.github.xxfast.decompose.router.content.RoutedContent
+import io.github.xxfast.decompose.router.RouterContext
 import io.github.xxfast.decompose.router.rememberOnRoute
-import io.github.xxfast.decompose.router.rememberRouter
+import io.github.xxfast.decompose.router.stack.RoutedContent
+import io.github.xxfast.decompose.router.stack.Router
+import io.github.xxfast.decompose.router.stack.rememberRouter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import presentation.list.ListScreen
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -39,14 +39,13 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun Home() {
     val router: Router<MainScreen> = rememberRouter(MainScreen::class) { listOf(MainScreen.HomeScreen) }
+    val animation : StackAnimation<MainScreen, RouterContext> = predictiveBackAnimation(
+        fallbackAnimation = stackAnimation(slide()),
+        onBack = { router.pop() },
+        backHandler = LocalRouterContext.current.backHandler)
 
     RoutedContent(
-        router = router,
-        animation = predictiveBackAnimation(
-            backHandler = LocalRouterContext.current.backHandler,
-            onBack = { router.pop() },
-            animation = stackAnimation(slide())
-        ),
+        router, animation = animation
     ) { screen ->
         when (screen) {
             MainScreen.HomeScreen -> MainHomeScreen()
@@ -55,11 +54,11 @@ fun Home() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainHomeScreen() {
     val viewModel: HomeViewModel =
-        rememberOnRoute(HomeViewModel::class) { savedState -> HomeViewModel(savedState) }
+        rememberOnRoute(key = "home", type = HomeViewModel::class) { savedState -> HomeViewModel(savedState) }
 
     val state: HomeState by viewModel.states.collectAsState()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(

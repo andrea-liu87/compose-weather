@@ -104,6 +104,7 @@ kotlin {
                 implementation(libs.molecule.runtime)
                 implementation(libs.decompose)
                 implementation(libs.decompose.compose.multiplatform)
+                implementation(libs.decompose.router)
 
                 implementation(libs.essenty.parcelable)
                 implementation(libs.ktor.client.core)
@@ -167,15 +168,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    dependencies {
-        debugImplementation(libs.compose.ui.tooling)
-    }
-}
-dependencies {
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation(libs.androidx.ui.android)
-    implementation(libs.androidx.startup.runtime)
-    implementation(libs.androidx.datastore.core.android)
 }
 
 compose.desktop {

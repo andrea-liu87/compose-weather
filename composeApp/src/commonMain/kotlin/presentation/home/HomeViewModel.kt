@@ -5,7 +5,9 @@ import data.api.WeatherAPI
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
 import data.weatherDataSaved
-import io.github.xxfast.decompose.router.SavedStateHandle
+import io.github.xxfast.decompose.router.RouterContext
+import io.github.xxfast.decompose.router.getOrCreate
+import io.github.xxfast.decompose.router.state
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import models.Current
@@ -16,9 +18,9 @@ import models.Weather
 import models.WeatherAPIResponse
 import presentation.navigation.ViewModel
 
-class HomeViewModel(savedState: SavedStateHandle) : ViewModel() {
+class HomeViewModel(savedState: RouterContext) : ViewModel() {
     private val eventsFlow: MutableSharedFlow<HomeEvent> = MutableSharedFlow(5)
-    private val initialState: HomeState = savedState.get() ?: HomeState(
+     val initialHomeState = HomeState(
         WeatherAPIResponse(
             timezone =  "America",
             current = Current(temp = 230.0, weather = arrayListOf( Weather(description = "Cloudy Day"))),
@@ -30,13 +32,14 @@ class HomeViewModel(savedState: SavedStateHandle) : ViewModel() {
             name = "Montreal"
         )
     )
+    private val initialState: HomeState = savedState.state(initialHomeState){states.value}
     private val webService = WeatherAPI()
     private val locationService = LocationService()
 
     val states: StateFlow<HomeState> by lazy {
         moleculeFlow(RecompositionMode.Immediate) {
             HomeDomain(initialState, eventsFlow, webService, locationService, weatherDataSaved) }
-            .onEach { state -> savedState.set(state) }
+            .onEach { state -> savedState.getOrCreate(key = "home", {state}) }
             .stateIn(this, SharingStarted.Lazily, initialState)
     }
 
