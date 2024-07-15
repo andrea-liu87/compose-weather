@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import models.Current
 import models.Daily
+import models.Hourly
 import models.Location
-import models.Temp
-import models.Weather
 import models.WeatherAPIResponse
 import presentation.navigation.ViewModel
 
@@ -23,8 +22,9 @@ class HomeViewModel(savedState: RouterContext) : ViewModel() {
      val initialHomeState = HomeState(
         WeatherAPIResponse(
             timezone =  "America",
-            current = Current(temp = 230.0, weather = arrayListOf( Weather(description = "Cloudy Day"))),
-            daily = arrayListOf(Daily(temp = Temp(max = 270.0, min = 200.0)))
+            current = Current(time = "2024-07-14T20:45", interval = 900, temperature2m = 33.7, weatherCode = 77),
+            daily = Daily(time = arrayListOf("2024-07-15"), temperature2mMax = arrayListOf(40.0), arrayListOf(32.3), weatherCode = arrayListOf(1)),
+            hourly = Hourly(time = arrayListOf("2024-07-15T09:00"), temperature2m = arrayListOf(40.0), weatherCode = arrayListOf(1))
         ),
         Location(
             latitude = 45.5019,

@@ -31,6 +31,7 @@ import io.github.xxfast.decompose.router.stack.Router
 import io.github.xxfast.decompose.router.stack.rememberRouter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import models.weatherCodeToDescription
 import presentation.list.ListScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -116,10 +117,10 @@ fun WeatherView(state: HomeState) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val name = state.location?.name ?: state.weatherData?.timezone
-            val temp = state.weatherData?.current?.temp
-            val descr = state.weatherData?.current?.weather?.get(0)?.description ?: ""
-            val highest = state.weatherData?.daily?.get(0)?.temp?.max
-            val lowest = state.weatherData?.daily?.get(0)?.temp?.min
+            val temp = state.weatherData?.current?.temperature2m
+            val descr = weatherCodeToDescription(state.weatherData?.current?.weatherCode ?: 0)
+            val highest = state.weatherData?.daily?.temperature2mMax
+            val lowest = state.weatherData?.daily?.temperature2mMin
 
             Column(
                 modifier = Modifier
@@ -129,9 +130,9 @@ fun WeatherView(state: HomeState) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(name ?: "Unknown Location", style = MaterialTheme.typography.h3)
-                Text("${convertToC(temp ?: 0.0)}° C", style = MaterialTheme.typography.h3)
+                Text("$temp° C", style = MaterialTheme.typography.h3)
                 Text(descr, style = MaterialTheme.typography.body1, color = Color.Gray)
-                Text("H:${convertToC(highest ?: 0.0)}° L:${convertToC(lowest ?: 0.00)}°", style = MaterialTheme.typography.body1)
+                Text("H:${highest?.get(0)}° L:${lowest?.get(0)}°", style = MaterialTheme.typography.body1)
             }
             Image(
                 modifier = Modifier
@@ -145,9 +146,4 @@ fun WeatherView(state: HomeState) {
             Spacer(modifier = Modifier.weight(1f))
         }
     }
-}
-
-fun convertToC(f: Double): String {
-    val tempInC = f - 273
-    return tempInC.toInt().toString()
 }

@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.Location
 import models.WeatherAPIResponse
+import org.lighthousegames.logging.Logger
+import org.lighthousegames.logging.logging
 
 @Composable
 fun HomeDomain(
@@ -29,7 +31,7 @@ fun HomeDomain(
         location = locationService.getCurrentLocationOneTime()
         withContext(Dispatchers.IO){
             weather = webService.getWeatherApiDataFrLonLat(location!!.latitude, location!!.longitude).getOrNull()
-            store.update { weather?.copy(timezone = location?.name, lat = location!!.latitude, lon = location!!.longitude) }
+            store.update { weather?.copy(timezone = location?.name, latitude = location!!.latitude, longitude = location!!.longitude) }
         }
     }
 
@@ -40,7 +42,7 @@ fun HomeDomain(
                     location = locationService.getCurrentLocationOneTime()
                     withContext(Dispatchers.IO){
                         weather = webService.getWeatherApiDataFrLonLat(location!!.latitude, location!!.longitude).getOrNull()
-                        store.update { weather?.copy(timezone = location?.name, lat = location!!.latitude, lon = location!!.longitude) }
+                        store.update { weather?.copy(timezone = location?.name, latitude = location!!.latitude, longitude = location!!.longitude) }
                     }
                 }
             }

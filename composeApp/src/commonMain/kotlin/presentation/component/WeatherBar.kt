@@ -19,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -26,26 +27,32 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.seiko.imageloader.rememberImagePainter
-import presentation.home.convertToC
+import composeweather.composeapp.generated.resources.Res
+import composeweather.composeapp.generated.resources.icon_rainy
+import composeweather.composeapp.generated.resources.icon_shower
+import composeweather.composeapp.generated.resources.icon_sunny
+import composeweather.composeapp.generated.resources.icon_windy
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import models.Daily
 import models.Hourly
+import models.weatherCodeToDescription
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import presentation.theme.SolidBlue
 import kotlin.time.Duration.Companion.days
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun WeatherBar(label: String, temp:String, icon: String){
-    val painterResource = rememberImagePainter("https://openweathermap.org/img/wn/$icon@2x.png")
-
+fun WeatherBar(label: String, temp:String, icon: DrawableResource){
     Column(
         modifier = Modifier
             .height(150.dp)
-            .width(60.dp)
             .background(color = SolidBlue.copy(0.2f), shape = RoundedCornerShape(percent = 100))
             .border(BorderStroke(2.dp, Color.White.copy(0.2f)), shape = RoundedCornerShape(percent = 100))
             .padding(vertical = 16.dp, horizontal = 8.dp)
@@ -54,25 +61,25 @@ fun WeatherBar(label: String, temp:String, icon: String){
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(modifier = Modifier.padding(top = 8.dp), text = label, style = TextStyle(color = Color.White, fontSize = 20.sp))
-        Image(painterResource, "weather icon", contentScale = ContentScale.Fit)
+        Image( painter = painterResource(icon), "weather icon", modifier = Modifier.scale(3f))
         Text(modifier = Modifier.padding(bottom = 8.dp), text = temp,style = TextStyle(color = androidx.compose.ui.graphics.Color.White, fontSize = 24.sp))
     }
 }
 
 @Composable
-fun HourForecast(hourList: ArrayList<Hourly>?){
-    if (hourList!= null && hourList.size > 0) {
+fun HourForecast(hourList: Hourly?){
+    if (hourList!= null && hourList.temperature2m.size > 0) {
             LazyRow(
                 modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Start
             ) {
-                itemsIndexed(hourList) { index, hourly ->
+                itemsIndexed(hourList.temperature2m) { index, hourly ->
                     if (index <= 24) {
                         WeatherBar(
-                            label = timeStampToString(hourly.dt!!.toLong()),
-                            temp = "${convertToC(hourly.temp ?: 0.00)}°",
-                            icon = hourly.weather[0].icon ?: "10n"
+                            label = LocalDateTime.parse(hourList.time[index]).time.toString(),
+                            temp = "${hourly.toInt()}°",
+                            icon =  getWeatherIcon(weatherCodeToDescription(hourList.weatherCode[index]))
                         )
                         Box(Modifier.width(5.dp))
                     }
@@ -84,19 +91,19 @@ fun HourForecast(hourList: ArrayList<Hourly>?){
 }
 
 @Composable
-fun WeeklyForecast(dailyList: ArrayList<Daily>?){
-    if (dailyList!= null && dailyList.size > 0) {
+fun WeeklyForecast(dailyList: Daily?){
+    if (dailyList!= null && dailyList.temperature2mMax.size > 0) {
         LazyRow(
             modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemsIndexed(dailyList) { index, daily ->
+            itemsIndexed(dailyList.temperature2mMax) { index, daily ->
                 if (index <= 7) {
                     WeatherBar(
-                        label = timeStampToString(daily.dt!!.toLong(), 1),
-                        temp = "${convertToC(daily.temp?.day ?: 0.00)}°",
-                        icon = daily.weather[0].icon ?: "10n"
+                        label = LocalDate.parse(dailyList.time[index]).dayOfMonth.toString(),
+                        temp = "${dailyList.temperature2mMax[index].toInt()}°",
+                        icon =  getWeatherIcon(weatherCodeToDescription(dailyList.weatherCode[index]))
                     )
                     Box(Modifier.width(5.dp))
                 }
@@ -107,13 +114,15 @@ fun WeeklyForecast(dailyList: ArrayList<Daily>?){
     }
 }
 
-fun getWeatherIcon(description : String): String {
-    if (description.contains("wind")) return "icon_windy.png"
-    if (description.contains("snow")) return "icon_windy.png"
-    if (description.contains("cloud")) return "icon_windy.png"
-    return if (description.contains("rain")) "icon_rainy.png"
+fun getWeatherIcon(description : String): DrawableResource {
+    if (description.lowercase().contains("clear")) return Res.drawable.icon_sunny
+    if (description.lowercase().contains("rain")) return Res.drawable.icon_rainy
+    if (description.lowercase().contains("wind")) return Res.drawable.icon_windy
+    if (description.lowercase().contains("shower")) return Res.drawable.icon_shower
+    if (description.lowercase().contains("snow")) return Res.drawable.icon_windy
+    if (description.lowercase().contains("cloud")) return Res.drawable.icon_windy
     else
-        "icon_rainy.png"
+        return Res.drawable.icon_sunny
 }
 
 @Composable
