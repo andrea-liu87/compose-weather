@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
@@ -69,19 +70,21 @@ fun MainHomeScreen() {
     val radius =
         if (bottomSheetScaffoldState.bottomSheetState.isExpanded) 0.dp
         else 16.dp
-    val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         bottomBar = { TabBar(viewModel) }
     ) {
         BottomSheetScaffold(
-            sheetContent = { BottomSheetContent(state) },
+            scaffoldState = bottomSheetScaffoldState,
+            sheetContent = { BottomSheetContent(
+                state) },
             //tab row ?? + weatherbar 120 + tab bar 100 + padding 3x20
             sheetPeekHeight = 360.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
-                WeatherView(state = state)
+                WeatherView(state = state,
+                    bottomSheetScaffoldState.bottomSheetState)
             }
         )
     }
@@ -99,9 +102,12 @@ private fun openBottomSheet(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun WeatherView(state: HomeState) {
+fun WeatherView(
+    state: HomeState,
+    bottomSheetState: BottomSheetState) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -110,40 +116,53 @@ fun WeatherView(state: HomeState) {
                 contentScale = ContentScale.FillBounds
             )
     ) {
-        if (state.weatherData == Loading) { LoadingWidget() }
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val name = state.location?.name ?: state.weatherData?.timezone
-            val temp = state.weatherData?.current?.temperature2m
-            val descr = weatherCodeToDescription(state.weatherData?.current?.weatherCode ?: 0)
-            val highest = state.weatherData?.daily?.temperature2mMax
-            val lowest = state.weatherData?.daily?.temperature2mMin
+        val name = state.location?.name ?: state.weatherData?.timezone
+        val temp = state.weatherData?.current?.temperature2m
+        val descr = weatherCodeToDescription(state.weatherData?.current?.weatherCode ?: 0)
+        val highest = state.weatherData?.daily?.temperature2mMax
+        val lowest = state.weatherData?.daily?.temperature2mMin
 
+        if (state.weatherData == Loading) { LoadingWidget() }
+        if (bottomSheetState.isExpanded){
+            Box(modifier = Modifier.fillMaxHeight(0.2f)) {
+                Text(
+                    "$name | $temp° C",
+                    style = MaterialTheme.typography.h3,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                )
+            }
+        } else {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1.5f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(name ?: "Unknown Location", style = MaterialTheme.typography.h3)
-                Text("$temp° C", style = MaterialTheme.typography.h3)
-                Text(descr, style = MaterialTheme.typography.body1, color = Color.Gray)
-                Text("H:${highest?.get(0)}° L:${lowest?.get(0)}°", style = MaterialTheme.typography.body1)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1.5f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(name ?: "Unknown Location", style = MaterialTheme.typography.h3)
+                    Text("$temp° C", style = MaterialTheme.typography.h3)
+                    Text(descr, style = MaterialTheme.typography.body1, color = Color.Gray)
+                    Text("H:${highest?.get(0)}° L:${lowest?.get(0)}°", style = MaterialTheme.typography.body1)
+                }
+                Image(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 12.dp)
+                        .weight(1.5f),
+                    painter = painterResource(Res.drawable.house2),
+                    contentDescription = "house",
+                    contentScale = ContentScale.Fit
+                )
+                Spacer(modifier = Modifier.weight(1f))
             }
-            Image(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 12.dp)
-                    .weight(1.5f),
-                painter = painterResource(Res.drawable.house2),
-                contentDescription = "house",
-                contentScale = ContentScale.Fit
-            )
-            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }

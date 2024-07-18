@@ -23,7 +23,8 @@ fun BottomSheetContent(state: HomeState) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxHeight(0.8f)
+            .fillMaxWidth()
             .background(Color.Black.copy(0.3f))
             .padding(bottom = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
