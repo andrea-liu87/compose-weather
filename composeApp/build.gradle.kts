@@ -73,6 +73,7 @@ kotlin {
                 implementation(libs.kstore.file)
                 implementation(compose.desktop.currentOs)
                 implementation(libs.harawata.appdirs)
+                implementation(libs.compose.ui.tooling.preview.jetbrain)
             }
         }
         

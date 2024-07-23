@@ -36,6 +36,7 @@ buildkonfig-gradle-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-ui-tooling-preview-jetbrain = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-multiplatform = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-router = { module = "io.github.xxfast:decompose-router", version.ref = "decompose-router" }
