@@ -77,7 +77,7 @@ fun MainHomeScreen() {
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,
             sheetContent = { BottomSheetContent(
-                state) },
+                state, bottomSheetScaffoldState.bottomSheetState) },
             //tab row ?? + weatherbar 120 + tab bar 100 + padding 3x20
             sheetPeekHeight = 360.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),

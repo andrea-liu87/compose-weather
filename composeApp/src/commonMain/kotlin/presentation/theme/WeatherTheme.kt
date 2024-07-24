@@ -67,6 +67,12 @@ fun WeatherTheme(
             fontWeight = FontWeight.Normal,
             fontSize = 34.sp,
             color = Color.White
+        ),
+        h4 = TextStyle(
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            fontSize = 26.sp,
+            color = Color.White
         )
     )
     val shapes = Shapes(

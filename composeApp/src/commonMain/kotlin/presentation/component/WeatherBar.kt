@@ -45,6 +45,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.theme.SolidBlue
+import presentation.theme.widgetBorderColor
 import kotlin.time.Duration.Companion.days
 
 @OptIn(ExperimentalResourceApi::class)
@@ -54,7 +55,7 @@ fun WeatherBar(label: String, temp:String, icon: DrawableResource){
         modifier = Modifier
             .height(150.dp)
             .background(color = SolidBlue.copy(0.2f), shape = RoundedCornerShape(percent = 100))
-            .border(BorderStroke(2.dp, Color.White.copy(0.2f)), shape = RoundedCornerShape(percent = 100))
+            .border(BorderStroke(2.dp, widgetBorderColor), shape = RoundedCornerShape(percent = 100))
             .padding(vertical = 16.dp, horizontal = 8.dp)
             .shadow(elevation = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
