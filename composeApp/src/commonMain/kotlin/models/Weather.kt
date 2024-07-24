@@ -40,7 +40,9 @@ data class Current (
     @SerialName("time"           ) var time          : String? = null,
     @SerialName("interval"       ) var interval      : Int?    = null,
     @SerialName("temperature_2m" ) var temperature2m : Double? = null,
-    @SerialName("weather_code" ) var weatherCode : Int? = null
+    @SerialName("weather_code" ) var weatherCode : Int? = null,
+    @SerialName("relative_humidity_2m") var humidity : Int? = null,
+    @SerialName("apparent_temperature") var feelsLike : Double? = null
 
 )
 
@@ -67,7 +69,10 @@ data class DailyUnits (
 
     @SerialName("time"               ) var time             : String? = null,
     @SerialName("temperature_2m_max" ) var temperature2mMax : String? = null,
-    @SerialName("temperature_2m_min" ) var temperature2mMin : String? = null
+    @SerialName("temperature_2m_min" ) var temperature2mMin : String? = null,
+    @SerialName("sunrise" ) var sunrise : String? = null,
+    @SerialName("sunset" ) var sunset : String? = null,
+    @SerialName("uv_index_max" ) var uvIndex : String? = null
 
 )
 
@@ -77,7 +82,10 @@ data class Daily (
     @SerialName("time"               ) var time             : ArrayList<String> = arrayListOf(),
     @SerialName("temperature_2m_max" ) var temperature2mMax : ArrayList<Double> = arrayListOf(),
     @SerialName("temperature_2m_min" ) var temperature2mMin : ArrayList<Double> = arrayListOf(),
-    @SerialName("weather_code" ) var weatherCode : ArrayList<Int> = arrayListOf()
+    @SerialName("weather_code" ) var weatherCode : ArrayList<Int> = arrayListOf(),
+    @SerialName("sunrise" ) var sunrise : ArrayList<String> = arrayListOf(),
+    @SerialName("sunset" ) var sunset : ArrayList<String> = arrayListOf(),
+    @SerialName("uv_index_max" ) var uvIndex : ArrayList<Double> = arrayListOf()
 
 )
 

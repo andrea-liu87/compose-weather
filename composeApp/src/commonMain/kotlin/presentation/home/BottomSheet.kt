@@ -13,7 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.LocalDateTime
+import presentation.component.FeelsLike
 import presentation.component.HourForecast
+import presentation.component.Humidity
+import presentation.component.Sunrise
+import presentation.component.UVIndex
 import presentation.component.WeeklyForecast
 import presentation.theme.SolidPurple
 import presentation.theme.secondary
@@ -72,40 +77,15 @@ fun BottomSheetContent(state: HomeState, bottomSheetState: BottomSheetState) {
                     Modifier.fillMaxWidth()
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Column(
-                        Modifier.height(widgetSize.dp)
-                            .padding(4.dp)
-                            .weight(1f)
-                            .border(
-                                border = BorderStroke(2.dp, widgetBorderColor),
-                                shape = RoundedCornerShape(16.dp)
-                            )
-                            .padding(start = 12.dp)
-                    ) {
-                        Spacer(Modifier.weight(1f))
-                        Text("UV Index", color = secondary)
-                        Spacer(Modifier.weight(1f))
-                        Text("4", style = MaterialTheme.typography.h4)
-                        Text("Moderate", style = MaterialTheme.typography.h4)
-                        Spacer(Modifier.weight(1f))
-                    }
-                    Column(
-                        Modifier.height(widgetSize.dp)
-                            .padding(4.dp)
-                            .weight(1f)
-                            .border(
-                                border = BorderStroke(2.dp, widgetBorderColor),
-                                shape = RoundedCornerShape(16.dp)
-                            )
-                            .padding(start = 12.dp)
-                    ) {
-                        Spacer(Modifier.weight(1f))
-                        Text("Sunrise", color = secondary)
-                        Spacer(Modifier.weight(1f))
-                        Text("5:28 AM", style = MaterialTheme.typography.h4)
-                        Text("Sundown 6:23 PM", color = Color.White)
-                        Spacer(Modifier.weight(1f))
-                    }
+                    UVIndex(state, Modifier.weight(1f))
+                    Sunrise(state, Modifier.weight(1f))
+                }
+                Row(
+                    Modifier.fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    FeelsLike(state, Modifier.weight(1f))
+                    Humidity(state, Modifier.weight(1f))
                 }
             }
         }
