@@ -1,4 +1,7 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.material.BottomSheetState
+import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import models.Current
 import models.Daily
@@ -9,6 +12,7 @@ import presentation.home.BottomSheetContent
 import presentation.home.HomeState
 import presentation.theme.WeatherTheme
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Preview
 fun PreviewBottomSheet() {
@@ -26,6 +30,6 @@ fun PreviewBottomSheet() {
         )
     )
     WeatherTheme {
-        BottomSheetContent(initialHomeState)
+        BottomSheetContent(initialHomeState, BottomSheetState(BottomSheetValue.Collapsed))
     }
 }

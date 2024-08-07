@@ -4,7 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.BottomSheetScaffoldState
@@ -64,7 +66,9 @@ fun BottomSheetContent(state: HomeState, bottomSheetState: BottomSheetState) {
         Column(
             modifier = Modifier
                 .padding()
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .weight(1f,false),
             verticalArrangement = Arrangement.Top
         ) {
             if (tabIndex == 0){
@@ -87,6 +91,7 @@ fun BottomSheetContent(state: HomeState, bottomSheetState: BottomSheetState) {
                     FeelsLike(state, Modifier.weight(1f))
                     Humidity(state, Modifier.weight(1f))
                 }
+                Box(Modifier.height((widgetSize/2).dp))
             }
         }
     }
