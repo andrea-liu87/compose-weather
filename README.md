@@ -1,4 +1,4 @@
-![kotlin-version](https://img.shields.io/badge/kotlin-2.0.0-blue?logo=kotlin)
+![kotlin-version](https://img.shields.io/badge/kotlin-2.0.10-blue?logo=kotlin)
 
 # ComposeWeather
 
