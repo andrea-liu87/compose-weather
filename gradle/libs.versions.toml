@@ -14,10 +14,11 @@ buildkonfigGradlePlugin = "0.15.1"
 compose = "1.6.11"
 compose-plugin = "1.6.11"
 compose-multiplatform = "1.6.11"
+compose-icons = "1.1.0"
 decompose = "3.0.0"
 decompose-router = "0.8.0"
 essenty = "1.2.0"
-google-PlayServicesAndroidLocation = "21.3.0"
+google-PlayServicesAndroidLocation = "21.1.0"
 harawata-appdirs = "1.2.1"
 junit = "4.13.2"
 kotlin = "2.0.10"
@@ -38,6 +39,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-ui-tooling-preview-jetbrain = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-multiplatform = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
+composeIcons-weatherIcons = { module = "br.com.devsrsouza.compose.icons:erikflowers-weather-icons", version.ref = "compose-icons" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-router = { module = "io.github.xxfast:decompose-router", version.ref = "decompose-router" }
 decompose-compose-multiplatform = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }

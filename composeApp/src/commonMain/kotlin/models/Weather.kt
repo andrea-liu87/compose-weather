@@ -60,7 +60,9 @@ data class Hourly (
 
     @SerialName("time"           ) var time          : ArrayList<String> = arrayListOf(),
     @SerialName("temperature_2m" ) var temperature2m : ArrayList<Double> = arrayListOf(),
-    @SerialName("weather_code" ) var weatherCode : ArrayList<Int> = arrayListOf()
+    @SerialName("weather_code" ) var weatherCode : ArrayList<Int> = arrayListOf(),
+    @SerialName("visibility" ) var visibility : ArrayList<Double> = arrayListOf(),
+    @SerialName("wind_speed_10m" ) var windSpeed : ArrayList<Double> = arrayListOf()
 
 )
 

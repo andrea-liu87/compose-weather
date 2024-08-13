@@ -15,13 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import io.ktor.http.CacheControl
 import kotlinx.datetime.LocalDateTime
 import presentation.component.FeelsLike
 import presentation.component.HourForecast
 import presentation.component.Humidity
 import presentation.component.Sunrise
 import presentation.component.UVIndex
+import presentation.component.Visibility
 import presentation.component.WeeklyForecast
+import presentation.component.Wind
 import presentation.theme.SolidPurple
 import presentation.theme.secondary
 import presentation.theme.widgetBorderColor
@@ -90,6 +93,13 @@ fun BottomSheetContent(state: HomeState, bottomSheetState: BottomSheetState) {
                 ) {
                     FeelsLike(state, Modifier.weight(1f))
                     Humidity(state, Modifier.weight(1f))
+                }
+                Row(
+                    Modifier.fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Wind(state, Modifier.weight(1f))
+                    Visibility(state, Modifier.weight(1f))
                 }
                 Box(Modifier.height((widgetSize/2).dp))
             }

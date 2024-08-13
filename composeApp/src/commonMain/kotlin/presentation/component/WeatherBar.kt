@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,11 +23,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.seiko.imageloader.rememberImagePainter
+import compose.icons.WeatherIcons
+import compose.icons.weathericons.Cloudy
+import compose.icons.weathericons.DayRain
+import compose.icons.weathericons.DaySunny
+import compose.icons.weathericons.Rain
+import compose.icons.weathericons.Snow
+import compose.icons.weathericons.Windy
 import composeweather.composeapp.generated.resources.Res
 import composeweather.composeapp.generated.resources.icon_rainy
 import composeweather.composeapp.generated.resources.icon_shower
@@ -50,7 +60,7 @@ import kotlin.time.Duration.Companion.days
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun WeatherBar(label: String, temp:String, icon: DrawableResource){
+fun WeatherBar(label: String, temp:String, icon: ImageVector){
     Column(
         modifier = Modifier
             .height(150.dp)
@@ -62,7 +72,7 @@ fun WeatherBar(label: String, temp:String, icon: DrawableResource){
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(modifier = Modifier.padding(top = 8.dp), text = label, style = TextStyle(color = Color.White, fontSize = 20.sp))
-        Image( painter = painterResource(icon), "weather icon", modifier = Modifier.scale(3f))
+        Image(imageVector = icon, "weather icon", contentScale = ContentScale.Fit, colorFilter = ColorFilter.tint(Color.White))
         Text(modifier = Modifier.padding(bottom = 8.dp), text = temp,style = TextStyle(color = androidx.compose.ui.graphics.Color.White, fontSize = 24.sp))
     }
 }
@@ -115,15 +125,15 @@ fun WeeklyForecast(dailyList: Daily?){
     }
 }
 
-fun getWeatherIcon(description : String): DrawableResource {
-    if (description.lowercase().contains("clear")) return Res.drawable.icon_sunny
-    if (description.lowercase().contains("rain")) return Res.drawable.icon_rainy
-    if (description.lowercase().contains("wind")) return Res.drawable.icon_windy
-    if (description.lowercase().contains("shower")) return Res.drawable.icon_shower
-    if (description.lowercase().contains("snow")) return Res.drawable.icon_windy
-    if (description.lowercase().contains("cloud")) return Res.drawable.icon_windy
+fun getWeatherIcon(description : String): ImageVector {
+    if (description.lowercase().contains("clear")) return WeatherIcons.DaySunny
+    if (description.lowercase().contains("rain")) return WeatherIcons.DayRain
+    if (description.lowercase().contains("wind")) return WeatherIcons.Windy
+    if (description.lowercase().contains("shower")) return WeatherIcons.Rain
+    if (description.lowercase().contains("snow")) return WeatherIcons.Snow
+    if (description.lowercase().contains("cloud")) return WeatherIcons.Cloudy
     else
-        return Res.drawable.icon_sunny
+        return WeatherIcons.DaySunny
 }
 
 @Composable

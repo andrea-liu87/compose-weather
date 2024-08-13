@@ -98,6 +98,7 @@ kotlin {
                 implementation(compose.ui)
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                implementation(libs.composeIcons.weatherIcons)
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
                 implementation(libs.kotlinx.coroutines)
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")

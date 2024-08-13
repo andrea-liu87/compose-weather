@@ -39,7 +39,7 @@ class WeatherAPI()  {
                     parameters.append("latitude", lat.toString())
                     parameters.append("longitude", lon.toString())
                     parameters.appendAll("current", listOf("temperature_2m","weather_code","relative_humidity_2m","apparent_temperature") )
-                    parameters.appendAll("hourly", listOf("temperature_2m","weather_code") )
+                    parameters.appendAll("hourly", listOf("temperature_2m","weather_code","visibility","wind_speed_10m") )
                     parameters.appendAll(name = "daily", listOf("weather_code","temperature_2m_max","temperature_2m_min","sunrise","sunset","uv_index_max"))
                     parameters.append("timezone", "auto")
                     parameters.append("forecast_hours","24")

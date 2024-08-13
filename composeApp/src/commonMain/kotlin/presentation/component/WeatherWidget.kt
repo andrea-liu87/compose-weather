@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -96,6 +97,37 @@ fun Humidity(state: HomeState, modifier: Modifier){
         Spacer(Modifier.weight(2f))
         Text("Humidity", color = secondary)
         Text(text = "${state.weatherData?.current?.humidity}%", style = MaterialTheme.typography.h4, modifier = Modifier.padding(top = 8.dp))
+        Spacer(Modifier.weight(3f))
+    }
+}
+
+@Composable
+fun Wind(state: HomeState, modifier: Modifier){
+    Column(
+        modifier.height(widgetSize.dp)
+            .padding(4.dp)
+            .border(border = borderWidgetStroke, shape = borderWidgetShape)
+            .padding(start = 12.dp)
+    ) {
+        Spacer(Modifier.weight(1f))
+        Text("Wind Speed", color = secondary)
+        Text("${state.weatherData?.hourly?.windSpeed?.get(0)?.toInt()} km/h", style = MaterialTheme.typography.h4)
+        Spacer(Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun Visibility(state: HomeState, modifier: Modifier){
+    val visibility = state.weatherData?.hourly?.visibility?.get(0)?.toInt()?.div(1000) ?: 0
+    Column(
+        modifier.height(widgetSize.dp)
+            .padding(4.dp)
+            .border(borderWidgetStroke, borderWidgetShape)
+            .padding(start = 12.dp)
+    ) {
+        Spacer(Modifier.weight(2f))
+        Text("Visibility", color = secondary)
+        Text(text = "$visibility km", style = MaterialTheme.typography.h4, modifier = Modifier.padding(top = 8.dp))
         Spacer(Modifier.weight(3f))
     }
 }
