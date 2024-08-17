@@ -26,9 +26,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.theme.SolidPurple2
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun TabBar(viewModel: HomeViewModel) {
+fun TabBar(viewModel: HomeViewModel,
+           addNewPlace: () -> Unit) {
     val iconSize = 44
 
     Row(
@@ -50,7 +50,7 @@ fun TabBar(viewModel: HomeViewModel) {
         )
         Image(
             modifier = Modifier
-                .clickable { }
+                .clickable { addNewPlace()}
                 .height(100.dp),
             painter = painterResource(Res.drawable.mainadd_btn),
             contentDescription = "add button"

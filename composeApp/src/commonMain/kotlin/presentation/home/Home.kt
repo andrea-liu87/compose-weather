@@ -36,6 +36,7 @@ import models.weatherCodeToDescription
 import presentation.list.ListScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.component.AddNewPlacesDialog
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -71,8 +72,12 @@ fun MainHomeScreen() {
         if (bottomSheetScaffoldState.bottomSheetState.isExpanded) 0.dp
         else 16.dp
 
+    var showNewPlace by remember { mutableStateOf(false) }
+
     Scaffold(
-        bottomBar = { TabBar(viewModel) }
+        bottomBar = { TabBar(
+            viewModel = viewModel,
+            addNewPlace = {showNewPlace = true}) }
     ) {
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,
@@ -84,21 +89,11 @@ fun MainHomeScreen() {
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
                 WeatherView(state = state,
-                    bottomSheetScaffoldState.bottomSheetState)
+                    bottomSheetScaffoldState.bottomSheetState,
+                    showNewPlaceWidget = showNewPlace,
+                    closeNewPlaceWidget = {showNewPlace = false})
             }
         )
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-private fun openBottomSheet(
-    bottomSheetScaffoldState: BottomSheetScaffoldState,
-    coroutineScope: CoroutineScope
-) {
-    if (bottomSheetScaffoldState.bottomSheetState.isCollapsed) {
-        coroutineScope.launch {
-            bottomSheetScaffoldState.bottomSheetState.expand()
-        }
     }
 }
 
@@ -107,7 +102,10 @@ private fun openBottomSheet(
 @Composable
 fun WeatherView(
     state: HomeState,
-    bottomSheetState: BottomSheetState) {
+    bottomSheetState: BottomSheetState,
+    showNewPlaceWidget: Boolean,
+    closeNewPlaceWidget: () -> Unit) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -164,5 +162,8 @@ fun WeatherView(
                 Spacer(modifier = Modifier.weight(1f))
             }
         }
+        if (showNewPlaceWidget) AddNewPlacesDialog(
+            closeDialog = {closeNewPlaceWidget()}
+        )
     }
 }
