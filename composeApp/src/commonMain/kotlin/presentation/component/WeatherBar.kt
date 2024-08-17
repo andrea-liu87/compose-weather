@@ -32,8 +32,13 @@ import androidx.compose.ui.unit.sp
 import com.seiko.imageloader.rememberImagePainter
 import compose.icons.WeatherIcons
 import compose.icons.weathericons.Cloudy
+import compose.icons.weathericons.DayCloudy
+import compose.icons.weathericons.DayHaze
 import compose.icons.weathericons.DayRain
+import compose.icons.weathericons.DayShowers
+import compose.icons.weathericons.DaySnow
 import compose.icons.weathericons.DaySunny
+import compose.icons.weathericons.DayThunderstorm
 import compose.icons.weathericons.Rain
 import compose.icons.weathericons.Snow
 import compose.icons.weathericons.Windy
@@ -126,12 +131,14 @@ fun WeeklyForecast(dailyList: Daily?){
 }
 
 fun getWeatherIcon(description : String): ImageVector {
+    if (description.lowercase().contains("thunderstorm")) return WeatherIcons.DayThunderstorm
     if (description.lowercase().contains("clear")) return WeatherIcons.DaySunny
-    if (description.lowercase().contains("rain")) return WeatherIcons.DayRain
-    if (description.lowercase().contains("wind")) return WeatherIcons.Windy
-    if (description.lowercase().contains("shower")) return WeatherIcons.Rain
-    if (description.lowercase().contains("snow")) return WeatherIcons.Snow
-    if (description.lowercase().contains("cloud")) return WeatherIcons.Cloudy
+    if (description.lowercase().contains("rain")) return WeatherIcons.DayShowers
+    if (description.lowercase().contains("drizzle")) return WeatherIcons.DayShowers
+    if (description.lowercase().contains("snow")) return WeatherIcons.DaySnow
+    if (description.lowercase().contains("cloudy")) return WeatherIcons.DayCloudy
+    if (description.lowercase().contains("overcast")) return WeatherIcons.DayCloudy
+    if (description.lowercase().contains("fog")) return WeatherIcons.DayHaze
     else
         return WeatherIcons.DaySunny
 }
