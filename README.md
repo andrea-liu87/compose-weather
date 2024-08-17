@@ -14,13 +14,16 @@ This is a Weather App build with Kotlin Multiplatform project targeting Android,
 - 🧩 [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform); for shared UI
 - 🌐 [Ktor](https://github.com/ktorio/ktor); for networking
 - 🗃️ [KStore](https://github.com/xxfast/KStore); for storage
-- 📷 [Image Loader](https://github.com/qdsfdhvh/compose-imageloader); for displaying image
 - 📦 [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization); for content negotiation
 - 🚏 [Decompose](https://github.com/arkivanov/Decompose) + [Router](https://github.com/xxfast/Decompose-Router); for navigation
 - 🧪 [Molecule](https://github.com/cashapp/molecule); for modeling state
 - 🔖 [KMLogging](https://github.com/LighthouseGames/KmLogging); for logging
 - 📍 [Google Geolocation](https://developers.google.com/maps/documentation/geolocation/overview); for Geolocation
 - 🗺️ [Google Geocoding](https://developers.google.com/maps/documentation/geocoding/overview); for Parsing address from coordinates
+
+## UI Library
+- 📷 [Image Loader](https://github.com/qdsfdhvh/compose-imageloader); for displaying image
+- ⏯ [Compose Icons](https://github.com/DevSrSouza/compose-icons); add weather icons
 
 ## Showcase
 
