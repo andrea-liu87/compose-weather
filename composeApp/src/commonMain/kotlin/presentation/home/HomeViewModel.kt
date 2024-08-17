@@ -8,8 +8,14 @@ import data.weatherDataSaved
 import io.github.xxfast.decompose.router.RouterContext
 import io.github.xxfast.decompose.router.getOrCreate
 import io.github.xxfast.decompose.router.state
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import models.Current
 import models.Daily
 import models.Hourly
@@ -17,31 +23,61 @@ import models.Location
 import models.WeatherAPIResponse
 import presentation.navigation.ViewModel
 
-class HomeViewModel(savedState: RouterContext) : ViewModel() {
-    private val eventsFlow: MutableSharedFlow<HomeEvent> = MutableSharedFlow(5)
-     val initialHomeState = HomeState(
-        WeatherAPIResponse(
-            timezone =  "America",
-            current = Current(time = "2024-07-14T20:45", interval = 900, temperature2m = 33.7, weatherCode = 77),
-            daily = Daily(time = arrayListOf("2024-07-15"), temperature2mMax = arrayListOf(40.0), arrayListOf(32.3), weatherCode = arrayListOf(1)),
-            hourly = Hourly(time = arrayListOf("2024-07-15T09:00"), temperature2m = arrayListOf(40.0), weatherCode = arrayListOf(1))
-        ),
-        Location(
-            latitude = 45.5019,
-            longitude = -73.5674,
-            name = "Montreal"
-        )
-    )
-    private val initialState: HomeState = savedState.state(initialHomeState){states.value}
-    private val webService = WeatherAPI()
+class HomeViewModel() : ViewModel() {
+    private val coroutineHandlerException =
+        CoroutineExceptionHandler { coroutineContext, throwable ->
+            println("error is ${throwable.message}")
+        }
+    private val viewModelScope =
+        CoroutineScope(Dispatchers.Unconfined + SupervisorJob() + coroutineHandlerException)
+
+    private val weatherApi = WeatherAPI()
     private val locationService = LocationService()
 
-    val states: StateFlow<HomeState> by lazy {
-        moleculeFlow(RecompositionMode.Immediate) {
-            HomeDomain(initialState, eventsFlow, webService, locationService, weatherDataSaved) }
-            .onEach { state -> savedState.getOrCreate(key = "home", {state}) }
-            .stateIn(this, SharingStarted.Lazily, initialState)
+    private val _states = MutableStateFlow<HomeState>(HomeState.Loading)
+    val states: StateFlow<HomeState> = _states
+
+    init {
+        fetchCurrentLocationData()
     }
 
-    fun onRefresh() { launch { eventsFlow.emit(HomeEvent.Refresh) } }
+    private fun fetchCurrentLocationData(){
+        viewModelScope.launch {
+            try {
+                val location = locationService.getCurrentLocationOneTime()
+                withContext(Dispatchers.IO) {
+                    val weatherData =
+                        weatherApi.getWeatherApiDataFrLonLat(location.latitude, location.longitude)
+                    if (weatherData.isSuccess) {
+                        _states.emit(
+                            HomeState.Success(weatherData.getOrNull(), location)
+                        )
+                    } else {
+                        _states.emit(HomeState.Error(weatherData.exceptionOrNull()?.message ?: "Error API weather"))
+                    }
+                }
+            } catch (e: Exception){
+                println("Emitting error state")
+                _states.emit(HomeState.Error(e.message ?: "Something went wrong"))
+            }
+            catch (error: Throwable) {
+                _states.emit(HomeState.Error("Something went wrong ${error.message}"))
+            }
+        }
+    }
+
+
+    fun onAction(actions: HomeViewModelActions) {
+        viewModelScope.launch {
+            when (actions) {
+                is HomeViewModelActions.RefreshCurrentLocation -> {
+
+                }
+
+                is HomeViewModelActions.AddNewPlace -> {
+
+                }
+            }
+        }
+    }
 }

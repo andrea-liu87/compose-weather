@@ -24,6 +24,8 @@ import presentation.home.HomeViewModel
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.home.Home
+import presentation.home.HomeViewModelActions
 import presentation.theme.SolidPurple2
 
 @Composable
@@ -40,7 +42,7 @@ fun TabBar(viewModel: HomeViewModel,
     ) {
         Image(
             modifier = Modifier
-                .clickable { viewModel.onRefresh()}
+                .clickable { viewModel.onAction(HomeViewModelActions.RefreshCurrentLocation)}
                 .height(iconSize.dp)
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),

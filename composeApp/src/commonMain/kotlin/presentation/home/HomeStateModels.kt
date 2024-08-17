@@ -1,19 +1,17 @@
 package presentation.home
 
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
-import kotlinx.serialization.Serializable
 import models.Location
 import models.WeatherAPIResponse
 
-val Loading: Nothing? = null
+sealed interface HomeState {
+    object Loading : HomeState
+    data class Error(val message: String) : HomeState
+    data class Success(
+        val weatherData: WeatherAPIResponse? = null,
+        val location: Location? = null) : HomeState
+}
 
-@Serializable
-data class HomeState(
-    val weatherData: WeatherAPIResponse?,
-    val location: Location?
-)
-
-sealed interface HomeEvent {
-    object Refresh: HomeEvent
+sealed interface HomeViewModelActions {
+    object RefreshCurrentLocation : HomeViewModelActions
+    data class AddNewPlace(val place: String) : HomeViewModelActions
 }

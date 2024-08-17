@@ -44,7 +44,7 @@ val borderWidgetStroke = BorderStroke(2.dp, widgetBorderColor)
 val borderWidgetShape = RoundedCornerShape(16.dp)
 
 @Composable
-fun UVIndex(state: HomeState, modifier: Modifier){
+fun UVIndex(state: HomeState.Success, modifier: Modifier){
     Column(
         modifier.height(widgetSize.dp)
             .padding(4.dp)
@@ -68,7 +68,7 @@ fun UVIndex(state: HomeState, modifier: Modifier){
 }
 
 @Composable
-fun Sunrise(state: HomeState, modifier: Modifier){
+fun Sunrise(state: HomeState.Success, modifier: Modifier){
     Column(
         modifier.height(widgetSize.dp)
             .padding(4.dp)
@@ -91,7 +91,7 @@ fun Sunrise(state: HomeState, modifier: Modifier){
 }
 
 @Composable
-fun FeelsLike(state: HomeState, modifier: Modifier){
+fun FeelsLike(state: HomeState.Success, modifier: Modifier){
     Column(
         modifier.height(widgetSize.dp)
             .padding(4.dp)
@@ -109,7 +109,7 @@ fun FeelsLike(state: HomeState, modifier: Modifier){
 }
 
 @Composable
-fun Humidity(state: HomeState, modifier: Modifier){
+fun Humidity(state: HomeState.Success, modifier: Modifier){
     Column(
         modifier.height(widgetSize.dp)
             .padding(4.dp)
@@ -127,7 +127,7 @@ fun Humidity(state: HomeState, modifier: Modifier){
 }
 
 @Composable
-fun Wind(state: HomeState, modifier: Modifier){
+fun Wind(state: HomeState.Success, modifier: Modifier){
     Column(
         modifier.height(widgetSize.dp)
             .padding(4.dp)
@@ -145,7 +145,7 @@ fun Wind(state: HomeState, modifier: Modifier){
 }
 
 @Composable
-fun Visibility(state: HomeState, modifier: Modifier){
+fun Visibility(state: HomeState.Success, modifier: Modifier){
     val visibility = state.weatherData?.hourly?.visibility?.get(0)?.toInt()?.div(1000) ?: 0
     Column(
         modifier.height(widgetSize.dp)

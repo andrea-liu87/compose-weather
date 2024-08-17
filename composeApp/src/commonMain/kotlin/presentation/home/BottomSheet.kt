@@ -31,7 +31,7 @@ import presentation.theme.widgetBorderColor
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSheetContent(state: HomeState, bottomSheetState: BottomSheetState) {
+fun BottomSheetContent(state: HomeState.Success, bottomSheetState: BottomSheetState) {
     val titles = listOf("Hourly Forecast", "Weekly Forecast")
     var tabIndex by remember { mutableStateOf(0) }
     val widgetSize = 196

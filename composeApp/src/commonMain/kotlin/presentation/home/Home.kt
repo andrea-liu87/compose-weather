@@ -61,13 +61,13 @@ fun Home() {
 @Composable
 fun MainHomeScreen() {
     val viewModel: HomeViewModel =
-        rememberOnRoute(key = "home", type = HomeViewModel::class) { savedState -> HomeViewModel(savedState) }
+        rememberOnRoute(key = "home", type = HomeViewModel::class) { savedState -> HomeViewModel() }
 
-    val state: HomeState by viewModel.states.collectAsState()
+    val state: State<HomeState> = viewModel.states.collectAsState()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
-    val coroutineScope = rememberCoroutineScope()
+
     val radius =
         if (bottomSheetScaffoldState.bottomSheetState.isExpanded) 0.dp
         else 16.dp
@@ -81,17 +81,23 @@ fun MainHomeScreen() {
     ) {
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,
-            sheetContent = { BottomSheetContent(
-                state, bottomSheetScaffoldState.bottomSheetState) },
+            sheetContent = { if (state.value is HomeState.Success)
+                BottomSheetContent(
+                    state.value as HomeState.Success,
+                    bottomSheetScaffoldState.bottomSheetState) },
             //tab row ?? + weatherbar 120 + tab bar 100 + padding 3x20
             sheetPeekHeight = 360.dp,
             sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
             sheetBackgroundColor = Color.Black.copy(0.3f),
             content = {
-                WeatherView(state = state,
+                when (val result = state.value){
+                is HomeState.Loading -> LoadingWidget()
+                is HomeState.Success -> WeatherView(state = result,
                     bottomSheetScaffoldState.bottomSheetState,
                     showNewPlaceWidget = showNewPlace,
                     closeNewPlaceWidget = {showNewPlace = false})
+                    is HomeState.Error ->  {}
+                }
             }
         )
     }
@@ -101,7 +107,7 @@ fun MainHomeScreen() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun WeatherView(
-    state: HomeState,
+    state: HomeState.Success,
     bottomSheetState: BottomSheetState,
     showNewPlaceWidget: Boolean,
     closeNewPlaceWidget: () -> Unit) {
@@ -114,13 +120,12 @@ fun WeatherView(
                 contentScale = ContentScale.FillBounds
             )
     ) {
-        val name = state.location?.name ?: state.weatherData?.timezone
+        val name = state. location?.name ?: state.weatherData?.timezone
         val temp = state.weatherData?.current?.temperature2m
         val descr = weatherCodeToDescription(state.weatherData?.current?.weatherCode ?: 0)
         val highest = state.weatherData?.daily?.temperature2mMax
         val lowest = state.weatherData?.daily?.temperature2mMin
 
-        if (state.weatherData == Loading) { LoadingWidget() }
         if (bottomSheetState.isExpanded){
             Box(modifier = Modifier.fillMaxHeight(0.2f)) {
                 Text(

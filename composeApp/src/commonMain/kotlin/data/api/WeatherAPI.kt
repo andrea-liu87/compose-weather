@@ -47,35 +47,6 @@ class WeatherAPI()  {
             }
         }
 
-    val defaultHttpClient = HttpClient {
-        install(HttpCache)
-
-        install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true }) }
-
-        install(Logging) { logger = Logger.SIMPLE }
-
-        defaultRequest {
-            url {
-                host = "api.open-meteo.com"
-                protocol = URLProtocol.HTTPS
-                parameters.append("latitude", "45.5019")
-                parameters.append("longitude", "-73.5674")
-                parameters.append("current", "temperature_2m" )
-                parameters.append("hourly", "temperature_2m" )
-                parameters.appendAll(name = "daily", listOf("temperature_2m_max","temperature_2m_min"))
-                parameters.append("timezone", "auto")
-                parameters.append("forecast_hours","24")
-            }
-        }
-    }
-
-
-    suspend fun getWeatherApiData(): Result<WeatherAPIResponse> =
-        defaultHttpClient.get {
-            url {
-                path("v1/forecast") } }
-
     suspend fun getWeatherApiDataFrLonLat(latitude: Double, longitude:Double): Result<WeatherAPIResponse> =
         buildUrl(latitude, longitude).get { url {
             path("v1/forecast")} }
