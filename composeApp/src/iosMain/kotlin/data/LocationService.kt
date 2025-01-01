@@ -23,6 +23,8 @@ actual class LocationService actual constructor() {
     // Define a native CLLocationManager object
     private val oneTimeLocationManager = CLLocationManager()
 
+    private val geocoder = CLGeocoder()
+
     // Define an atomic reference to store the latest location
     private val latestLocation = AtomicReference<Location?>(null)
 
@@ -99,6 +101,24 @@ actual class LocationService actual constructor() {
             }
         }
         oneTimeLocationManager.delegate = locationDelegate
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    actual suspend fun getCoordinates(place: String): Location? = suspendCoroutine { continuation ->
+        CLGeocoder().geocodeAddressString(place){ list, error ->
+            if (error == null && list?.get(0) is CLPlacemark) {
+                val location =
+                    Location(
+                        (list[0] as CLPlacemark).location?.coordinate!!.useContents { latitude },
+                        (list[0] as CLPlacemark).location?.coordinate!!.useContents { longitude },
+                        (list[0] as CLPlacemark).subAdministrativeArea
+                    )
+                location.run { continuation.resume(this) }
+            } else {run {
+                continuation.resumeWithException(Exception("Unable to get current location"))
+            }
+            }
+        }
     }
 
 }

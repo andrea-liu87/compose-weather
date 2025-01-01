@@ -82,6 +82,39 @@ actual class LocationService actual constructor() {
         }
     }
 
+    private fun buildUrlGeocodingWithLocationName(place: String): HttpClient =
+        HttpClient {
+            install(HttpCache)
+            install(ContentNegotiation) {
+                json(Json { ignoreUnknownKeys = true })
+            }
+
+            install(Logging) { logger = Logger.SIMPLE }
+
+            defaultRequest {
+                url {
+                    host = "maps.googleapis.com"
+                    protocol = URLProtocol.HTTPS
+                    parameters.append("place_id", "$place")
+                    parameters.append("key", BuildKonfig.GOOGLE_MAPS_KEY)
+                }
+            }
+        }
+
+    actual suspend fun getCoordinates(place: String): Location? =
+        withContext(Dispatchers.IO) {
+//            try {
+//                val geocodingResult = parseGeocodingPlace(place).body<GeocodingResponse>().results
+//                return@withContext Location(
+//                    geocodingResult[0],
+//                    result.location!!.longitude,
+//                    address
+//                )
+//            } catch (e: Exception){
+       return@withContext null
+//            }
+        }
+
     private suspend fun requestCurrentLocation(): io.ktor.client.statement.HttpResponse =
         client.post {
             url(urlPost)
@@ -102,6 +135,15 @@ actual class LocationService actual constructor() {
         lon: Double
     ): io.ktor.client.statement.HttpResponse =
         buildUrlGeocoding(lat, lon).get {
+            url {
+                path("maps/api/geocode/json")
+            }
+        }
+
+    private suspend fun parseGeocodingPlace(
+       place: String
+    ): io.ktor.client.statement.HttpResponse =
+        buildUrlGeocodingWithLocationName(place).get {
             url {
                 path("maps/api/geocode/json")
             }

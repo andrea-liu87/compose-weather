@@ -16,7 +16,7 @@ import presentation.theme.WeatherTheme
 @Composable
 @Preview
 fun PreviewBottomSheet() {
-    val initialHomeState = HomeState(
+    val initialHomeState = HomeState.Success(
         WeatherAPIResponse(
             timezone =  "America",
             current = Current(time = "2024-07-14T20:45", interval = 900, temperature2m = 33.7, weatherCode = 77),
