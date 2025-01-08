@@ -15,12 +15,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -29,24 +27,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.seiko.imageloader.rememberImagePainter
 import compose.icons.WeatherIcons
-import compose.icons.weathericons.Cloudy
 import compose.icons.weathericons.DayCloudy
 import compose.icons.weathericons.DayHaze
-import compose.icons.weathericons.DayRain
 import compose.icons.weathericons.DayShowers
 import compose.icons.weathericons.DaySnow
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.DayThunderstorm
-import compose.icons.weathericons.Rain
-import compose.icons.weathericons.Snow
-import compose.icons.weathericons.Windy
-import composeweather.composeapp.generated.resources.Res
-import composeweather.composeapp.generated.resources.icon_rainy
-import composeweather.composeapp.generated.resources.icon_shower
-import composeweather.composeapp.generated.resources.icon_sunny
-import composeweather.composeapp.generated.resources.icon_windy
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -56,9 +43,7 @@ import kotlinx.datetime.toLocalDateTime
 import models.Daily
 import models.Hourly
 import models.weatherCodeToDescription
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import presentation.theme.SolidBlue
 import presentation.theme.widgetBorderColor
 import kotlin.time.Duration.Companion.days
@@ -87,8 +72,7 @@ fun HourForecast(hourList: Hourly?){
     if (hourList!= null && hourList.temperature2m.size > 0) {
             LazyRow(
                 modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
+                    .fillMaxWidth()
             ) {
                 itemsIndexed(hourList.temperature2m) { index, hourly ->
                     if (index <= 24) {
@@ -111,14 +95,15 @@ fun WeeklyForecast(dailyList: Daily?){
     if (dailyList!= null && dailyList.temperature2mMax.size > 0) {
         LazyRow(
             modifier = Modifier.padding(start = 12.dp, top = 8.dp, end = 7.dp, bottom = 16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxWidth()
         ) {
             itemsIndexed(dailyList.temperature2mMax) { index, daily ->
                 if (index <= 7) {
+                    val date = LocalDate.parse(dailyList.time[index]).dayOfMonth
+                    val maxTemp = dailyList.temperature2mMax[index]
                     WeatherBar(
-                        label = LocalDate.parse(dailyList.time[index]).dayOfMonth.toString(),
-                        temp = "${dailyList.temperature2mMax[index].toInt()}°",
+                        label = if (date < 10) "0$date" else "$date",
+                        temp = "${maxTemp.toInt()}°",
                         icon =  getWeatherIcon(weatherCodeToDescription(dailyList.weatherCode[index]))
                     )
                     Box(Modifier.width(5.dp))

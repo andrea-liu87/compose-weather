@@ -3,7 +3,12 @@ package presentation.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,17 +25,15 @@ import composeweather.composeapp.generated.resources.Res
 import composeweather.composeapp.generated.resources.location
 import composeweather.composeapp.generated.resources.mainadd_btn
 import composeweather.composeapp.generated.resources.seemore
-import presentation.home.HomeViewModel
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.home.Home
+import presentation.home.HomeViewModel
 import presentation.home.HomeViewModelActions
 import presentation.theme.SolidPurple2
 
 @Composable
 fun TabBar(viewModel: HomeViewModel,
-           addNewPlace: () -> Unit) {
+           addNewPlace: () -> Unit,
+           showListScreen: () -> Unit) {
     val iconSize = 44
 
     Row(
@@ -59,7 +62,7 @@ fun TabBar(viewModel: HomeViewModel,
         )
         Image(
             modifier = Modifier
-                .clickable { }
+                .clickable { showListScreen()}
                 .height(iconSize.dp)
                 .width(iconSize.dp)
                 .align(Alignment.CenterVertically),
