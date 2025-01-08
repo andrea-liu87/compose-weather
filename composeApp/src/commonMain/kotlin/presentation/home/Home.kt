@@ -2,10 +2,31 @@ package presentation.home
 
 import MainScreen
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetState
+import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.rememberBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -19,24 +40,22 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import composeweather.composeapp.generated.resources.Res
 import composeweather.composeapp.generated.resources.background
 import composeweather.composeapp.generated.resources.house2
-import presentation.component.LoadingWidget
-import presentation.component.TabBar
 import io.github.xxfast.decompose.router.LocalRouterContext
 import io.github.xxfast.decompose.router.RouterContext
 import io.github.xxfast.decompose.router.rememberOnRoute
 import io.github.xxfast.decompose.router.stack.RoutedContent
 import io.github.xxfast.decompose.router.stack.Router
 import io.github.xxfast.decompose.router.stack.rememberRouter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import models.weatherCodeToDescription
-import presentation.list.ListScreen
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.component.AddNewPlacesDialog
+import presentation.component.LoadingWidget
+import presentation.component.TabBar
+import presentation.list.ListScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -51,7 +70,7 @@ fun Home() {
         router, animation = animation
     ) { screen ->
         when (screen) {
-            MainScreen.HomeScreen -> MainHomeScreen()
+            MainScreen.HomeScreen -> MainHomeScreen({ router.push(MainScreen.ListScreen) })
             is MainScreen.ListScreen -> ListScreen()
         }
     }
@@ -59,7 +78,7 @@ fun Home() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainHomeScreen() {
+fun MainHomeScreen(navigateToListScreen: () -> Unit) {
     val viewModel: HomeViewModel =
         rememberOnRoute(key = "home", type = HomeViewModel::class) { savedState -> HomeViewModel() }
 
@@ -77,7 +96,8 @@ fun MainHomeScreen() {
     Scaffold(
         bottomBar = { TabBar(
             viewModel = viewModel,
-            addNewPlace = {showNewPlace = true}) }
+            addNewPlace = {showNewPlace = true},
+            showListScreen = {navigateToListScreen()}) }
     ) {
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,

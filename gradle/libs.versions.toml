@@ -11,7 +11,8 @@ androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
 buildkonfigGradlePlugin = "0.15.2"
-compose = "1.6.11"
+compass = "1.2.2"
+compose = "1.6.8"
 compose-plugin = "1.6.11"
 compose-multiplatform = "1.7.0"
 compose-icons = "1.1.0"
@@ -35,6 +36,17 @@ datastoreCoreAndroid = "1.1.1"
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 buildkonfig-gradle-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildkonfigGradlePlugin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+compass-autocomplete = { module = "dev.jordond.compass:autocomplete", version.ref = "compass" }
+compass-autocomplete-mobile = { module = "dev.jordond.compass:autocomplete-mobile", version.ref = "compass" }
+compass-autocomplete-web = { module = "dev.jordond.compass:autocomplete-web", version.ref = "compass" }
+compass-autocomplete-geocoder-googlemaps = { module = "dev.jordond.compass:autocomplete-geocoder-googlemaps", version.ref = "compass" }
+compass-autocomplete-geocoder-mapbox = { module = "dev.jordond.compass:autocomplete-geocoder-mapbox", version.ref = "compass" }
+compass-geocoder = { module = "dev.jordond.compass:geocoder", version.ref = "compass" }
+compass-geocoder-mobile = { module = "dev.jordond.compass:geocoder-mobile", version.ref = "compass" }
+compass-geolocation = { module = "dev.jordond.compass:geolocation", version.ref = "compass" }
+compass-geolocation-mobile = { module = "dev.jordond.compass:geolocation-mobile", version.ref = "compass" }
+compass-geolocation-browser = { module = "dev.jordond.compass:geolocation-browser", version.ref = "compass" }
+compass-permissions-mobile = { module = "dev.jordond.compass:permissions-mobile", version.ref = "compass" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-ui-tooling-preview-jetbrain = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }

@@ -1,7 +1,7 @@
 
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.konan.properties.Properties
 
 buildscript {
@@ -67,27 +67,6 @@ kotlin {
     }
     
     sourceSets {
-        val desktopMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.cio)
-                implementation(libs.kstore.file)
-                implementation(compose.desktop.currentOs)
-                implementation(libs.harawata.appdirs)
-                implementation(libs.compose.ui.tooling.preview.jetbrain)
-            }
-        }
-        
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.compose.ui.tooling.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.ktor.client.cio)
-                implementation(libs.kstore.file)
-                implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
-                implementation("androidx.startup:startup-runtime:1.1.1")
-            }
-        }
-
         val commonMain by getting {
             dependencies {
                 api(libs.decompose.router)
@@ -122,6 +101,29 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
 
                 api("io.github.qdsfdhvh:image-loader:1.7.8")
+
+                implementation(libs.compass.geolocation)
+                implementation(libs.compass.geocoder)
+            }
+        }
+
+        val mobileMain by creating {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(libs.compass.geocoder.mobile)
+                implementation(libs.compass.geolocation.mobile)
+            }
+        }
+
+        val androidMain by getting {
+            dependsOn(mobileMain)
+            dependencies {
+                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.kstore.file)
+                implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+                implementation("androidx.startup:startup-runtime:1.1.1")
             }
         }
 
@@ -130,12 +132,24 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
+            dependsOn(mobileMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.kstore.file)
+            }
+        }
+
+        val desktopMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+                implementation(libs.kstore.file)
+                implementation(compose.desktop.currentOs)
+                implementation(libs.harawata.appdirs)
+                implementation(libs.compose.ui.tooling.preview.jetbrain)
+                implementation(libs.compass.geolocation.browser)
             }
         }
     }

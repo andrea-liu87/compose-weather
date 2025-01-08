@@ -2,25 +2,15 @@ package presentation.home
 
 import data.LocationService
 import data.api.WeatherAPI
-import app.cash.molecule.RecompositionMode
-import app.cash.molecule.moleculeFlow
-import data.weatherDataSaved
-import io.github.xxfast.decompose.router.RouterContext
-import io.github.xxfast.decompose.router.getOrCreate
-import io.github.xxfast.decompose.router.state
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import models.Current
-import models.Daily
-import models.Hourly
-import models.Location
-import models.WeatherAPIResponse
 import presentation.navigation.ViewModel
 
 class HomeViewModel() : ViewModel() {
@@ -44,10 +34,10 @@ class HomeViewModel() : ViewModel() {
     private fun fetchCurrentLocationData(){
         viewModelScope.launch {
             try {
-                val location = locationService.getCurrentLocationOneTime()
+                val location = locationService.getCurrentLocationOneTime().getOrNull()
                 withContext(Dispatchers.IO) {
                     val weatherData =
-                        weatherApi.getWeatherApiDataFrLonLat(location.latitude, location.longitude)
+                        weatherApi.getWeatherApiDataFrLonLat(location!!.latitude, location.longitude)
                     if (weatherData.isSuccess) {
                         _states.emit(
                             HomeState.Success(weatherData.getOrNull(), location)

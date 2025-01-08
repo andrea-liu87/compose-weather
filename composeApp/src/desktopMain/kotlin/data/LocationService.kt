@@ -32,6 +32,8 @@ actual class LocationService actual constructor() {
     private val urlPost =
         "https://www.googleapis.com/geolocation/v1/geolocate?key=${BuildKonfig.GOOGLE_MAPS_KEY}"
 
+    //val geolocator: Geolocator = Geolocator.browser()
+
     private fun buildUrlGeocoding(lat: Double, lon: Double): HttpClient =
         HttpClient {
             install(HttpCache)
@@ -60,7 +62,7 @@ actual class LocationService actual constructor() {
 
             install(Logging) { logger = Logger.SIMPLE }
         }
-    actual suspend fun getCurrentLocationOneTime(): Location = withContext(Dispatchers.IO) {
+    actual suspend fun getCurrentLocationOneTime(): Result<Location> = withContext(Dispatchers.IO) {
         val result = requestCurrentLocation().body<LocationResponse>()
         var address = ""
         withContext(Dispatchers.IO) {
@@ -74,10 +76,11 @@ actual class LocationService actual constructor() {
                     }
                 }
             }
-            return@withContext Location(
+            return@withContext Result.success(Location(
                 result.location!!.latitude,
                 result.location!!.longitude,
                 address
+            )
             )
         }
     }
